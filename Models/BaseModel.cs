@@ -1,8 +1,7 @@
 ﻿namespace Models
 {
-    public class Stav
+    public abstract class BaseModel
     {
         public int Id { get; set; }
-        public string Nazev { get; set; }
     }
 }
