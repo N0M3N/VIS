@@ -6,15 +6,15 @@ namespace Databse
 {
     internal class MzdaEntity : Entity<MzdaModel>
     {
-        public override string SQL_SELECT => throw new System.NotImplementedException();
+        protected override string SQL_SELECT => "SELECT [Id], [Uzivatel-Id], [Zakazka-Id], [Hodinova-Sazba] FROM [dbo].[Mzdy];";
 
-        public override string SQL_SELECT_ID => throw new System.NotImplementedException();
+        protected override string SQL_SELECT_ID => "SELECT [Id], [Uzivatel-Id], [Zakazka-Id], [Hodinova-Sazba] FROM [dbo].[Mzdy] WHERE [Id] = @p_id;";
 
-        public override string SQL_INSERT => throw new System.NotImplementedException();
+        protected override string SQL_INSERT => "INSERT INTO[dbo].[Mzdy]([Uzivatel-Id], [Zakazka-Id], [Hodinova-Sazba]) VALUES(@p_uzivatelId, @p_zakazkaId, @p_sazba);";
 
-        public override string SQL_UPDATE => throw new System.NotImplementedException();
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Mzdy] SET [Uzivatel-Id] = @p_uzivatelId, [Zakazka-Id] = @p_zakazkaId, [Hodinova-Sazba] = @p_sazba WHERE [Id] = @p_id;";
 
-        public override string SQL_DELETE => throw new System.NotImplementedException();
+        protected override string SQL_DELETE => "DELETE FROM [dbo].[Mzdy] WHERE [Id] = @p_id;";
 
         public override int Insert(MzdaModel t)
         {

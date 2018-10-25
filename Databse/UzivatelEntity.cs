@@ -6,15 +6,15 @@ namespace Databse
 {
     internal class UzivatelEntity : Entity<UzivatelModel>
     {
-        public override string SQL_SELECT => throw new System.NotImplementedException();
+        protected override string SQL_SELECT => "SELECT [Id], [Jmeno], [Prijmeni], [Telefon], [Login], [Heslo], [JeZakaznik], [JeZamestnanec] FROM [dbo].[Uzivatel];";
 
-        public override string SQL_SELECT_ID => throw new System.NotImplementedException();
+        protected override string SQL_SELECT_ID => "SELECT [Id], [Jmeno], [Prijmeni], [Telefon], [Login], [Heslo], [JeZakaznik], [JeZamestnanec] FROM [dbo].[Uzivatel] WHERE [Id] = @p_id;";
 
-        public override string SQL_INSERT => throw new System.NotImplementedException();
+        protected override string SQL_INSERT => "INSERT INTO [dbo].[Uzivatel] ([Jmeno], [Prijmeni], [Telefon], [Login], [Heslo], [JeZakaznik], [JeZamestnanec]) VALUES (@p_jmeno, @p_prijmeni, @p_telefon, @p_login, @p_heslo, @p_jeZakaznik, @p_jeZamestnanec);";
 
-        public override string SQL_UPDATE => throw new System.NotImplementedException();
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Uzivatel] SET [Jmeno] = @p_jmeno, [Prijmeni] = @p_prijmeni, [Telefon] = @p_telefon, [Login] = @p_login, [Heslo] = @p_heslo, [JeZakaznik] = @p_jeZakaznik, [JeZamestnanec] = @p_jeZamestnanec WHERE [Id] = @p_id;";
 
-        public override string SQL_DELETE => throw new System.NotImplementedException();
+        protected override string SQL_DELETE => "DELETE FROM[dbo].[Uzivatel] WHERE [Id] = @p_id;";
 
         public override int Insert(UzivatelModel t)
         {

@@ -6,24 +6,26 @@ namespace Databse
 {
     internal class StavEntity : Entity<StavModel>
     {
-        public override string SQL_SELECT => throw new System.NotImplementedException();
+        protected override string SQL_SELECT => "SELECT [Id], [Nazev] FROM [dbo].[Stav];";
 
-        public override string SQL_SELECT_ID => throw new System.NotImplementedException();
+        protected override string SQL_SELECT_ID => "SELECT [Id], [Nazev] FROM[dbo].[Stav] WHERE [Id] = @p_id;";
 
-        public override string SQL_INSERT => throw new System.NotImplementedException();
+        protected override string SQL_INSERT => throw new System.NotSupportedException();
 
-        public override string SQL_UPDATE => throw new System.NotImplementedException();
+        protected override string SQL_UPDATE => throw new System.NotSupportedException();
 
-        public override string SQL_DELETE => throw new System.NotImplementedException();
+        protected override string SQL_DELETE => throw new System.NotSupportedException();
 
         public override int Insert(StavModel t)
         {
-            throw new System.NotImplementedException();
+            // DO NOT CHANGE
+            throw new System.NotSupportedException();
         }
 
         public override int Update(StavModel t)
         {
-            throw new System.NotImplementedException();
+            // DO NOT CHANGE
+            throw new System.NotSupportedException();
         }
 
         protected override IEnumerable<StavModel> Read(SqlDataReader reader)

@@ -6,29 +6,32 @@ namespace Databse
 {
     internal class StavebniDenikEntity : Entity<StavebniDenikModel>
     {
-        public override string SQL_SELECT => throw new System.NotImplementedException();
+        protected override string SQL_SELECT => "SELECT [Id], [Zakazka-Id], [Uzivatel-Id], [Datum], [Popis] FROM [dbo].[StavebniDenik];";
 
-        public override string SQL_SELECT_ID => throw new System.NotImplementedException();
+        protected override string SQL_SELECT_ID => "SELECT [Id], [Zakazka-Id], [Uzivatel-Id], [Datum], [Popis] FROM [dbo].[StavebniDenik] WHERE [Id] = @p_id;";
 
-        public override string SQL_INSERT => throw new System.NotImplementedException();
+        protected override string SQL_INSERT => "INSERT INTO [dbo].[StavebniDenik]([Zakazka-Id], [Uzivatel-Id], [Datum], [Popis]) VALUES (@p_zakazkaId, @p_uzivatelId, @p_datum, @p_popis)";
 
-        public override string SQL_UPDATE => throw new System.NotImplementedException();
+        protected override string SQL_UPDATE => "UPDATE [dbo].[StavebniDenik] SET [Zakazka-Id] = @p_zakazkaId, [Uzivatel-Id] = @p_uzivatelId, [Datum] = @p_datum, [Popis] = @p_popis WHERE [Id] = @p_id;";
 
-        public override string SQL_DELETE => throw new System.NotImplementedException();
+        protected override string SQL_DELETE => "DELETE FROM [dbo].[StavebniDenik] WHERE [Id] = @p_id;";
 
         public override int Insert(StavebniDenikModel t)
         {
-            throw new System.NotImplementedException();
+            // DO NOT CHANGE
+            throw new System.NotSupportedException();
         }
 
         public override int Update(StavebniDenikModel t)
         {
-            throw new System.NotImplementedException();
+            // DO NOT CHANGE
+            throw new System.NotSupportedException();
         }
 
         protected override IEnumerable<StavebniDenikModel> Read(SqlDataReader reader)
         {
-            throw new System.NotImplementedException();
+            // DO NOT CHANGE
+            throw new System.NotSupportedException();
         }
     }
 }

@@ -35,9 +35,9 @@ CREATE TABLE [dbo].[Uzivatel](
 
 CREATE TABLE [dbo].[Zakazka]
 (
-	[Id] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[Id] [int] IDENTITY PRIMARY KEY NOT NULL,
 	[Zakaznik-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Uzivatel] ([Id]),
-	[UZamestnanec-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Uzivatel] ([Id]),
+	[Zamestnanec-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Uzivatel] ([Id]),
 	[Stav-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Stav] ([Id]),
 	[Adresa] [nvarchar](100) NOT NULL,
 	[Deadline] [datetime] NULL

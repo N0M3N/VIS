@@ -6,15 +6,15 @@ namespace Databse
 {
     internal class ZakazkaEntity : Entity<ZakazkaModel>
     {
-        public override string SQL_SELECT => throw new System.NotImplementedException();
+        protected override string SQL_SELECT => "SELECT [Id], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka];";
 
-        public override string SQL_SELECT_ID => throw new System.NotImplementedException();
+        protected override string SQL_SELECT_ID => "SELECT [Id], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
 
-        public override string SQL_INSERT => throw new System.NotImplementedException();
+        protected override string SQL_INSERT => "INSERT INTO [dbo].[Zakazka] ([Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline]) VALUES (@p_zakaznikId, @p_zamestnanecId, @p_stavId, @p_adresa, @p_deadline);";
 
-        public override string SQL_UPDATE => throw new System.NotImplementedException();
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Zakazka] SET [Zakaznik-Id] = @p_zakaznikId, [UZamestnanec-Id] = @p_zamestnanecId, [Stav-Id] = @p_stavId, [Adresa] = @p_adresa, [Deadline] = @p_deadline WHERE [Id] = @p_Id;";
 
-        public override string SQL_DELETE => throw new System.NotImplementedException();
+        protected override string SQL_DELETE => "DELETE FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
 
         public override int Insert(ZakazkaModel t)
         {
