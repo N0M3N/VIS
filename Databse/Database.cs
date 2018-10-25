@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -38,7 +39,7 @@ namespace Databse
             bool ret = true;
             if (Connection.State != ConnectionState.Open)
             {
-                // connection string is stored in file App.config or Web.config
+                var connectionstring = ConfigurationManager.AppSettings["connectionString"];
                 ret = Connect();
             }
             return ret;
