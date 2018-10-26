@@ -30,7 +30,20 @@ namespace Databse
 
         protected override IEnumerable<StavModel> Read(SqlDataReader reader)
         {
-            throw new System.NotImplementedException();
+            var stavy = new List<StavModel>();
+            while (reader.Read())
+            {
+                var i = -1;
+                var s = new StavModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Nazev = reader.GetString(++i)
+
+                };
+                stavy.Add(s);
+            }
+
+            return stavy;
         }
     }
 }

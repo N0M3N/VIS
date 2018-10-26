@@ -18,17 +18,58 @@ namespace Databse
 
         public override int Insert(UzivatelModel t)
         {
-            throw new System.NotImplementedException();
+            var db = new Database();
+            db.Connect();
+
+            var command = db.CreateCommand(SQL_INSERT);
+            command.Parameters.Add(new SqlParameter("@p_jmeno", t.Jmeno));
+            command.Parameters.Add(new SqlParameter("@p_prijmeni", t.Prijmeni));
+            command.Parameters.Add(new SqlParameter("@p_telefon", t.Telefon));
+            command.Parameters.Add(new SqlParameter("@p_login", t.Login));
+            //command.Parameters.Add(new SqlParameter("@p_heslo", t.Heslo));
+            command.Parameters.Add(new SqlParameter("@p_jeZakaznik", t.JeZakaznik));
+            command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestananec));
+            return db.ExecuteNonQuery(command);
         }
 
         public override int Update(UzivatelModel t)
         {
-            throw new System.NotImplementedException();
+            var db = new Database();
+            db.Connect();
+
+            var command = db.CreateCommand(SQL_UPDATE);
+            command.Parameters.Add(new SqlParameter("@p_jmeno", t.Jmeno));
+            command.Parameters.Add(new SqlParameter("@p_prijmeni", t.Prijmeni));
+            command.Parameters.Add(new SqlParameter("@p_telefon", t.Telefon));
+            command.Parameters.Add(new SqlParameter("@p_login", t.Login));
+            //command.Parameters.Add(new SqlParameter("@p_heslo", t.Heslo));
+            command.Parameters.Add(new SqlParameter("@p_jeZakaznik", t.JeZakaznik));
+            command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestananec));
+            command.Parameters.Add(new SqlParameter("@p_id", t.Id));
+            return db.ExecuteNonQuery(command);
         }
 
         protected override IEnumerable<UzivatelModel> Read(SqlDataReader reader)
         {
-            throw new System.NotImplementedException();
+            var uzivatele = new List<UzivatelModel>();
+            while (reader.Read())
+            {
+                var i = -1;
+                var u = new UzivatelModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Jmeno = reader.GetString(++i),
+                    Prijmeni = reader.GetString(++i),
+                    Telefon = reader.GetString(++i),
+                    Login = reader.GetString(++i),
+                    //Heslo = reader.GetString(++i),
+                    JeZakaznik = reader.GetBoolean(++i),
+                    JeZamestananec = reader.GetBoolean(++i),
+                };
+                
+                uzivatele.Add(u);
+            }
+            return uzivatele;
         }
     }
 }
