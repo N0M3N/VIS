@@ -4,7 +4,7 @@ using Models;
 
 namespace Databse
 {
-    internal class StavEntity : Entity<StavModel>
+    public class StavEntity : Entity<StavModel>
     {
         protected override string SQL_SELECT => "SELECT [Id], [Nazev] FROM [dbo].[Stav];";
 
