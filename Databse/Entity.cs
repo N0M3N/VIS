@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Databse
 {
-    internal abstract class Entity<T> : ICRUD<T> where T : BaseModel
+    public abstract class Entity<T> : ICRUD<T> where T : BaseModel
     {
         protected abstract string SQL_SELECT { get; }
         protected abstract string SQL_SELECT_ID { get; }

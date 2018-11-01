@@ -4,7 +4,7 @@ using Models;
 
 namespace Databse
 {
-    internal class ZakazkaEntity : Entity<ZakazkaModel>
+    public class ZakazkaEntity : Entity<ZakazkaModel>
     {
         protected override string SQL_SELECT => "SELECT [Id], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka];";
 
