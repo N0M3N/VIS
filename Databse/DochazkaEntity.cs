@@ -18,17 +18,111 @@ namespace Databse
 
         public override int Insert(DochazkaModel t)
         {
-            throw new System.NotImplementedException();
+            var db = new Database();
+            db.Connect();
+
+            var command = db.CreateCommand(SQL_INSERT);
+
+            command.Parameters.Add(new SqlParameter("@p_zakazkaId", t.Zakazka.Id));
+            command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.Zamestnanec.Id));
+            command.Parameters.Add(new SqlParameter("@p_datum", t.Datum));
+            command.Parameters.Add(new SqlParameter("@p_prichod", t.Prichod));
+            command.Parameters.Add(new SqlParameter("@p_odchod", t.Odchod));
+
+            return db.ExecuteNonQuery(command);
         }
 
         public override int Update(DochazkaModel t)
         {
-            throw new System.NotImplementedException();
+            var db = new Database();
+            db.Connect();
+
+            var command = db.CreateCommand(SQL_UPDATE);
+
+            command.Parameters.Add(new SqlParameter("@p_zakazkaId", t.Zakazka.Id));
+            command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.Zamestnanec.Id));
+            command.Parameters.Add(new SqlParameter("@p_datum", t.Datum));
+            command.Parameters.Add(new SqlParameter("@p_prichod", t.Prichod));
+            command.Parameters.Add(new SqlParameter("@p_odchod", t.Odchod));
+            command.Parameters.Add(new SqlParameter("@p_id", t.Id));
+
+            return db.ExecuteNonQuery(command);
         }
 
         protected override IEnumerable<DochazkaModel> Read(SqlDataReader reader)
         {
-            throw new System.NotImplementedException();
+            // TO DO 
+            var dochazka = new List<DochazkaModel>();
+            while (reader.Read())
+            {
+                var i = -1;
+                var d = new DochazkaModel
+                {
+                    Id = reader.GetInt32(++i),
+                };
+
+                var z = new ZakazkaModel
+                {
+                    Id = reader.GetInt32(++i),
+                };
+
+                var zakaznik = new UzivatelModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Jmeno = reader.GetString(++i),
+                    Prijmeni = reader.GetString(++i),
+                    Telefon = reader.GetString(++i),
+                    Login = reader.GetString(++i),
+                    //Heslo = reader.GetString(++i),
+                    JeZakaznik = reader.GetBoolean(++i),
+                    JeZamestananec = reader.GetBoolean(++i),
+                };
+                z.Zakaznik = zakaznik;
+
+                var zamestnanec = new UzivatelModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Jmeno = reader.GetString(++i),
+                    Prijmeni = reader.GetString(++i),
+                    Telefon = reader.GetString(++i),
+                    Login = reader.GetString(++i),
+                    //Heslo = reader.GetString(++i),
+                    JeZakaznik = reader.GetBoolean(++i),
+                    JeZamestananec = reader.GetBoolean(++i),
+                };
+                z.ZodpovednyZamestnanec = zamestnanec;
+
+                var stav = new StavModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Nazev = reader.GetString(++i)
+                };
+                z.Stav = stav;
+                z.Adresa = reader.GetString(++i);
+                z.Deadline = reader.GetDateTime(++i);
+                d.Zakazka = z;
+
+                var u = new UzivatelModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Jmeno = reader.GetString(++i),
+                    Prijmeni = reader.GetString(++i),
+                    Telefon = reader.GetString(++i),
+                    Login = reader.GetString(++i),
+                    //Heslo = reader.GetString(++i),
+                    JeZakaznik = reader.GetBoolean(++i),
+                    JeZamestananec = reader.GetBoolean(++i),
+                };
+
+                d.Zamestnanec = u;
+                d.Datum = reader.GetDateTime(++i);
+                d.Prichod = reader.GetTimeSpan(++i);
+                d.Odchod = reader.GetTimeSpan(++i);
+
+
+                dochazka.Add(d);
+            }
+            return dochazka;
         }
     }
 }

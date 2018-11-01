@@ -18,17 +18,83 @@ namespace Databse
 
         public override int Insert(ZakazkaModel t)
         {
-            throw new System.NotImplementedException();
+            var db = new Database();
+            db.Connect();
+
+            var command = db.CreateCommand(SQL_INSERT);
+            command.Parameters.Add(new SqlParameter("@p_zakaznikId", t.Zakaznik.Id));
+            command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.ZodpovednyZamestnanec.Id));
+            command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav.Id));
+            command.Parameters.Add(new SqlParameter("@p_adresa", t.Adresa));
+            command.Parameters.Add(new SqlParameter("@p_deadline", t.Deadline));
+
+            return db.ExecuteNonQuery(command);
         }
 
         public override int Update(ZakazkaModel t)
         {
-            throw new System.NotImplementedException();
+            var db = new Database();
+            db.Connect();
+
+            var command = db.CreateCommand(SQL_UPDATE);
+            command.Parameters.Add(new SqlParameter("@p_zakaznikId", t.Zakaznik.Id));
+            command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.ZodpovednyZamestnanec.Id));
+            command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav.Id));
+            command.Parameters.Add(new SqlParameter("@p_adresa", t.Adresa));
+            command.Parameters.Add(new SqlParameter("@p_deadline", t.Deadline));
+            command.Parameters.Add(new SqlParameter("@p_Id", t.Id));
+            return db.ExecuteNonQuery(command);
         }
 
         protected override IEnumerable<ZakazkaModel> Read(SqlDataReader reader)
         {
-            throw new System.NotImplementedException();
+            var zakazky = new List<ZakazkaModel>();
+            while (reader.Read())
+            {
+                var i = -1;
+                var z = new ZakazkaModel
+                {
+                    Id = reader.GetInt32(++i),
+                };
+
+                var zakaznik = new UzivatelModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Jmeno = reader.GetString(++i),
+                    Prijmeni = reader.GetString(++i),
+                    Telefon = reader.GetString(++i),
+                    Login = reader.GetString(++i),
+                    //Heslo = reader.GetString(++i),
+                    JeZakaznik = reader.GetBoolean(++i),
+                    JeZamestananec = reader.GetBoolean(++i),
+                };
+                z.Zakaznik = zakaznik;
+
+                var zamestnanec = new UzivatelModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Jmeno = reader.GetString(++i),
+                    Prijmeni = reader.GetString(++i),
+                    Telefon = reader.GetString(++i),
+                    Login = reader.GetString(++i),
+                    //Heslo = reader.GetString(++i),
+                    JeZakaznik = reader.GetBoolean(++i),
+                    JeZamestananec = reader.GetBoolean(++i),
+                };
+                z.ZodpovednyZamestnanec = zamestnanec;
+
+                var stav = new StavModel
+                {
+                    Id = reader.GetInt32(++i),
+                    Nazev = reader.GetString(++i)
+                };
+                z.Stav = stav;
+                z.Adresa = reader.GetString(++i);
+                z.Deadline = reader.GetDateTime(++i);
+
+                zakazky.Add(z);
+            }
+            return zakazky;
         }
     }
 }
