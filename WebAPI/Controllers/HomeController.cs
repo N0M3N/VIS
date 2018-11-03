@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
                         .Select(method => new MethodModel
                         {
                             Name = method.Name,
-                            Params = method.GetParameters().Select(parameter => parameter.Name).ToArray()
+                            Params = method.GetParameters().Select(parameter => new ParameterModel { Name = parameter.Name, Type = parameter.ParameterType.Name }).ToArray()
                         }).ToArray()
                 });
 
@@ -43,6 +43,12 @@ namespace WebAPI.Controllers
     public class MethodModel
     {
         public string Name;
-        public string[] Params;
+        public ParameterModel[] Params;
+    }
+
+    public class ParameterModel
+    {
+        public string Name;
+        public string Type;
     }
 }

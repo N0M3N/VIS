@@ -1,21 +1,35 @@
-﻿<ul>
+﻿<div class="row col-lg-8 col-md-8 col-sm-12">
     @foreach (WebAPI.Controllers.ControllerModel controller in ViewBag.controllers)
     {
-        <li>@controller.Name
-            <table>
-                @foreach(WebAPI.Controllers.MethodModel method in controller.Methods)
+        <div class="col-md-4 col-lg-4">
+            <h3>
+                Controller:
+                @controller.Name
+            </h3>
+
+            <ul>
+                @foreach (WebAPI.Controllers.MethodModel method in controller.Methods)
                 {
-                    <tr>
-                        <td>@method.Name
-                        </td>
-                        @foreach(string parameter in method.Params)
+                    <li>
+                        @method.Name
+                        (
+
+                        @foreach (WebAPI.Controllers.ParameterModel parameter in method.Params)
                         {
-                            <td>@parameter
-                            </td>
+                            <span>
+                                @parameter.Name
+                                :
+                                @parameter.Type
+                            </span>
+                            if (parameter != method.Params.Last())
+                            {
+                                <span>,</span>
+                            }
                         }
-                    </tr>
+                        )
+                    </li>
                 }
-            </table>
-        </li>
+            </ul>
+        </div>
     }
-</ul>
+</div>
