@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Desktop.Pages;
+using Desktop.Services;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Reactive.Linq;
 
 namespace Desktop
 {
@@ -23,6 +16,24 @@ namespace Desktop
         public MainWindow()
         {
             InitializeComponent();
+
+            Frame.JournalOwnership = JournalOwnership.OwnsJournal;
+
+            ServiceLocator.Instance
+                .GetService<IObservable<Page>>()
+                .Subscribe(page =>
+                {
+                    var previous = Frame.Content as Page;
+
+                    Frame.Navigate(page);
+
+                    var datacontext = previous?.DataContext as IDisposable;
+                    datacontext?.Dispose();
+                });
+
+            ServiceLocator.Instance
+                .GetService<INavigationService>()
+                .Navigate(new Login());
         }
     }
 }
