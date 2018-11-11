@@ -7,6 +7,6 @@
         public string Telefon { get; set; }
         public string Login { get; set; }
         public bool JeZakaznik { get; set; }
-        public bool JeZamestananec { get; set; }
+        public bool JeZamestnanec { get; set; }
     }
 }

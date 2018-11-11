@@ -66,6 +66,6 @@
             </DockPanel>
         </DockPanel>
 
-        <Frame DockPanel.Dock="Top" x:Name="Frame" Background="{StaticResource Accent1}" NavigationUIVisibility="Hidden" />
+        <Frame Padding="30" DockPanel.Dock="Top" x:Name="Frame" Background="{StaticResource Accent1}" NavigationUIVisibility="Hidden" />
     </DockPanel>
 </Window>

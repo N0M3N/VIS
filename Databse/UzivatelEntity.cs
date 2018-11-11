@@ -28,7 +28,7 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_login", t.Login));
             //command.Parameters.Add(new SqlParameter("@p_heslo", t.Heslo));
             command.Parameters.Add(new SqlParameter("@p_jeZakaznik", t.JeZakaznik));
-            command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestananec));
+            command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestnanec));
             return db.ExecuteNonQuery(command);
         }
 
@@ -44,7 +44,7 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_login", t.Login));
             //command.Parameters.Add(new SqlParameter("@p_heslo", t.Heslo));
             command.Parameters.Add(new SqlParameter("@p_jeZakaznik", t.JeZakaznik));
-            command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestananec));
+            command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestnanec));
             command.Parameters.Add(new SqlParameter("@p_id", t.Id));
             return db.ExecuteNonQuery(command);
         }
@@ -64,7 +64,7 @@ namespace Databse
                     Login = reader.GetString(++i),
                     //Heslo = reader.GetString(++i),
                     JeZakaznik = reader.GetBoolean(++i),
-                    JeZamestananec = reader.GetBoolean(++i),
+                    JeZamestnanec = reader.GetBoolean(++i),
                 };
                 
                 uzivatele.Add(u);

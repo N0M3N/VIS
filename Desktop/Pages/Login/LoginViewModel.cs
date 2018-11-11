@@ -29,7 +29,7 @@ namespace Desktop.Pages.Login
         private void LoginAction()
         {
             // TODO: Add login service
-            mainWIndow.CurrentUser.Value = new Models.UzivatelModel { JeZamestananec = true };
+            mainWIndow.CurrentUser.Value = new Models.UzivatelModel { JeZamestnanec = true };
             // TODO: Navigate to a page
             navigation.Navigate(new HomeView());
         }
