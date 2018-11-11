@@ -61,59 +61,10 @@ namespace Databse
                     Id = reader.GetInt32(++i),
                 };
 
-                var z = new ZakazkaModel
-                {
-                    Id = reader.GetInt32(++i),
-                };
-
-                var zakaznik = new UzivatelModel
-                {
-                    Id = reader.GetInt32(++i),
-                    Jmeno = reader.GetString(++i),
-                    Prijmeni = reader.GetString(++i),
-                    Telefon = reader.GetString(++i),
-                    Login = reader.GetString(++i),
-                    //Heslo = reader.GetString(++i),
-                    JeZakaznik = reader.GetBoolean(++i),
-                    JeZamestananec = reader.GetBoolean(++i),
-                };
-                z.Zakaznik = zakaznik;
-
-                var zamestnanec = new UzivatelModel
-                {
-                    Id = reader.GetInt32(++i),
-                    Jmeno = reader.GetString(++i),
-                    Prijmeni = reader.GetString(++i),
-                    Telefon = reader.GetString(++i),
-                    Login = reader.GetString(++i),
-                    //Heslo = reader.GetString(++i),
-                    JeZakaznik = reader.GetBoolean(++i),
-                    JeZamestananec = reader.GetBoolean(++i),
-                };
-                z.ZodpovednyZamestnanec = zamestnanec;
-
-                var stav = new StavModel
-                {
-                    Id = reader.GetInt32(++i),
-                    Nazev = reader.GetString(++i)
-                };
-                z.Stav = stav;
-                z.Adresa = reader.GetString(++i);
-                z.Deadline = reader.GetDateTime(++i);
+                var z = new ZakazkaEntity().Select(reader.GetInt32(++i));
                 d.Zakazka = z;
 
-                var u = new UzivatelModel
-                {
-                    Id = reader.GetInt32(++i),
-                    Jmeno = reader.GetString(++i),
-                    Prijmeni = reader.GetString(++i),
-                    Telefon = reader.GetString(++i),
-                    Login = reader.GetString(++i),
-                    //Heslo = reader.GetString(++i),
-                    JeZakaznik = reader.GetBoolean(++i),
-                    JeZamestananec = reader.GetBoolean(++i),
-                };
-
+                var u = new UzivatelEntity().Select(reader.GetInt32(++i));
                 d.Zamestnanec = u;
                 d.Datum = reader.GetDateTime(++i);
                 d.Prichod = reader.GetTimeSpan(++i);
