@@ -57,37 +57,13 @@ namespace Databse
                     Id = reader.GetInt32(++i),
                 };
 
-                var zakaznik = new UzivatelModel
-                {
-                    Id = reader.GetInt32(++i),
-                    Jmeno = reader.GetString(++i),
-                    Prijmeni = reader.GetString(++i),
-                    Telefon = reader.GetString(++i),
-                    Login = reader.GetString(++i),
-                    //Heslo = reader.GetString(++i),
-                    JeZakaznik = reader.GetBoolean(++i),
-                    JeZamestananec = reader.GetBoolean(++i),
-                };
+                var zakaznik = new UzivatelEntity().Select(reader.GetInt32(++i));
                 z.Zakaznik = zakaznik;
 
-                var zamestnanec = new UzivatelModel
-                {
-                    Id = reader.GetInt32(++i),
-                    Jmeno = reader.GetString(++i),
-                    Prijmeni = reader.GetString(++i),
-                    Telefon = reader.GetString(++i),
-                    Login = reader.GetString(++i),
-                    //Heslo = reader.GetString(++i),
-                    JeZakaznik = reader.GetBoolean(++i),
-                    JeZamestananec = reader.GetBoolean(++i),
-                };
+                var zamestnanec = new UzivatelEntity().Select(reader.GetInt32(++i));
                 z.ZodpovednyZamestnanec = zamestnanec;
 
-                var stav = new StavModel
-                {
-                    Id = reader.GetInt32(++i),
-                    Nazev = reader.GetString(++i)
-                };
+                var stav = new StavEntity().Select(reader.GetInt32(++i));
                 z.Stav = stav;
                 z.Adresa = reader.GetString(++i);
                 z.Deadline = reader.GetDateTime(++i);
