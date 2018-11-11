@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
+using Desktop.Attributes;
 using Desktop.Services;
 using System;
+using System.Linq;
 using System.Reactive.Subjects;
 using System.Windows;
 
@@ -20,6 +22,7 @@ namespace Desktop
             var builder = new ContainerBuilder();
 
             RegisterServices(builder);
+            RegisterViewModels(builder);
 
             container = builder.Build();
 
@@ -38,6 +41,32 @@ namespace Desktop
                 .As(typeof(IObservable<>))
                 .As(typeof(IObserver<>))
                 .SingleInstance();
+        }
+
+        private void RegisterViewModels(ContainerBuilder builder)
+        {
+            var viewModels = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes()
+                .Where(type => Attribute.IsDefined(type, typeof(ViewModelAttribute))));
+
+            foreach (var viewModel in viewModels)
+            {
+                var registration = builder.RegisterType(viewModel).AsSelf().PropertiesAutowired();
+
+                var attribute = (ViewModelAttribute)Attribute.GetCustomAttribute(viewModel, typeof(ViewModelAttribute));
+                switch (attribute.Scope)
+                {
+                    case ViewModelAttribute.ScopeType.SingleInstance:
+                        registration.SingleInstance();
+                        break;
+                    case ViewModelAttribute.ScopeType.InstancePerDependency:
+                        registration.InstancePerDependency();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(attribute.Scope), @"Unsupported scope");
+                }
+            }
         }
     }
 }

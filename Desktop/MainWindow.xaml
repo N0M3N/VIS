@@ -4,11 +4,65 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        xmlns:extensions="clr-namespace:Desktop.Extensions"
+        xmlns:local="clr-namespace:Desktop"
+        DataContext="{extensions:Resolve local:MainWindowViewModel}"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Title="VIS - Stavebni denik a dochazka">
 
     <DockPanel LastChildFill="True">
         <DockPanel LastChildFill="False" DockPanel.Dock="Top" Style="{StaticResource NavBar}">
-            <TextBlock Text="Stavebni denik a dochazka" Style="{StaticResource Logo}" />
+            <TextBlock Text="Stavebni denik a dochazka zamestnancu" Style="{StaticResource Logo}" />
+            <DockPanel DockPanel.Dock="Right">
+                <DockPanel.Style>
+                    <Style TargetType="DockPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentUser.Value}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DockPanel.Style>
+                <Button>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MenuSelection.Value}" Value="{x:Static local:MenuSelectionEnum.Detail}">
+                                    <Setter Property="Background" Value="{StaticResource Accent2}" />
+                                    <Setter Property="Foreground" Value="{StaticResource Accent4}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    Detail zakazky
+                </Button>
+                <Button>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MenuSelection.Value}" Value="{x:Static local:MenuSelectionEnum.Denik}">
+                                    <Setter Property="Background" Value="{StaticResource Accent2}" />
+                                    <Setter Property="Foreground" Value="{StaticResource Accent4}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    Stavebni denik
+                </Button>
+                <Button>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MenuSelection.Value}" Value="{x:Static local:MenuSelectionEnum.Kalkulace}">
+                                    <Setter Property="Background" Value="{StaticResource Accent2}" />
+                                    <Setter Property="Foreground" Value="{StaticResource Accent4}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    Kalkulace mezd
+                </Button>
+            </DockPanel>
         </DockPanel>
 
         <Frame DockPanel.Dock="Top" x:Name="Frame" Background="{StaticResource Accent1}" NavigationUIVisibility="Hidden" />

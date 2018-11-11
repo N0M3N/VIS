@@ -1,5 +1,5 @@
 ﻿using CommonServiceLocator;
-using Desktop.Pages;
+using Desktop.Pages.Login;
 using Desktop.Services;
 using System;
 using System.Reactive.Linq;
@@ -34,7 +34,7 @@ namespace Desktop
 
             ServiceLocator.Current
                 .GetInstance<INavigationService>()
-                .Navigate(new Login());
+                .Navigate(new LoginView());
         }
     }
 }
