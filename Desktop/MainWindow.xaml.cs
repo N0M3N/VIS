@@ -1,10 +1,11 @@
-﻿using Desktop.Pages;
+﻿using CommonServiceLocator;
+using Desktop.Pages;
 using Desktop.Services;
 using System;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using System.Reactive.Linq;
 
 namespace Desktop
 {
@@ -19,20 +20,20 @@ namespace Desktop
 
             Frame.JournalOwnership = JournalOwnership.OwnsJournal;
 
-            ServiceLocator.Instance
-                .GetService<IObservable<Page>>()
+            ServiceLocator.Current
+                .GetInstance<IObservable<Page>>()
                 .Subscribe(page =>
                 {
-                    var previous = Frame.Content as Page;
+                    var previousPage = Frame.Content as Page;
 
                     Frame.Navigate(page);
 
-                    var datacontext = previous?.DataContext as IDisposable;
+                    var datacontext = previousPage?.DataContext as IDisposable;
                     datacontext?.Dispose();
                 });
 
-            ServiceLocator.Instance
-                .GetService<INavigationService>()
+            ServiceLocator.Current
+                .GetInstance<INavigationService>()
                 .Navigate(new Login());
         }
     }
