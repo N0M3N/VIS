@@ -6,6 +6,7 @@
         mc:Ignorable="d"
         xmlns:extensions="clr-namespace:Desktop.Extensions"
         xmlns:local="clr-namespace:Desktop"
+        xmlns:detailzakazky="clr-namespace:Desktop.Pages.DetailZakazky"
         DataContext="{extensions:Resolve local:MainWindowViewModel}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Title="VIS - Stavebni denik a dochazka">
@@ -23,7 +24,7 @@
                         </Style.Triggers>
                     </Style>
                 </DockPanel.Style>
-                <Button>
+                <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
                             <Style.Triggers>
@@ -36,7 +37,7 @@
                     </Button.Style>
                     Detail zakazky
                 </Button>
-                <Button>
+                <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
                             <Style.Triggers>
@@ -49,7 +50,7 @@
                     </Button.Style>
                     Stavebni denik
                 </Button>
-                <Button>
+                <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
                             <Style.Triggers>

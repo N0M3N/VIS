@@ -1,5 +1,6 @@
 ﻿using Desktop.Attributes;
 using Desktop.Extensions;
+using Desktop.Pages.Home;
 using Desktop.Services;
 using Reactive.Bindings;
 using System;
@@ -30,7 +31,7 @@ namespace Desktop.Pages.Login
             // TODO: Add login service
             mainWIndow.CurrentUser.Value = new Models.UzivatelModel { JeZamestananec = true };
             // TODO: Navigate to a page
-            navigation.Navigate(new System.Windows.Controls.Page());
+            navigation.Navigate(new HomeView());
         }
 
         public void Dispose()

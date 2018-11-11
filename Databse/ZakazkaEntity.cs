@@ -6,13 +6,13 @@ namespace Databse
 {
     public class ZakazkaEntity : Entity<ZakazkaModel>
     {
-        protected override string SQL_SELECT => "SELECT [Id], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka];";
+        protected override string SQL_SELECT => "SELECT [Id], [Name], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka];";
 
-        protected override string SQL_SELECT_ID => "SELECT [Id], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
+        protected override string SQL_SELECT_ID => "SELECT [Id], [Name], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
 
-        protected override string SQL_INSERT => "INSERT INTO [dbo].[Zakazka] ([Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline]) VALUES (@p_zakaznikId, @p_zamestnanecId, @p_stavId, @p_adresa, @p_deadline);";
+        protected override string SQL_INSERT => "INSERT INTO [dbo].[Zakazka] ([Name], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline]) VALUES (@p_name, @p_zakaznikId, @p_zamestnanecId, @p_stavId, @p_adresa, @p_deadline);";
 
-        protected override string SQL_UPDATE => "UPDATE [dbo].[Zakazka] SET [Zakaznik-Id] = @p_zakaznikId, [UZamestnanec-Id] = @p_zamestnanecId, [Stav-Id] = @p_stavId, [Adresa] = @p_adresa, [Deadline] = @p_deadline WHERE [Id] = @p_Id;";
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Zakazka] SET [Name] = @p_name, [Zakaznik-Id] = @p_zakaznikId, [UZamestnanec-Id] = @p_zamestnanecId, [Stav-Id] = @p_stavId, [Adresa] = @p_adresa, [Deadline] = @p_deadline WHERE [Id] = @p_Id;";
 
         protected override string SQL_DELETE => "DELETE FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
 
@@ -22,6 +22,8 @@ namespace Databse
             db.Connect();
 
             var command = db.CreateCommand(SQL_INSERT);
+
+            command.Parameters.Add(new SqlParameter("@p_name", t.Name));
             command.Parameters.Add(new SqlParameter("@p_zakaznikId", t.Zakaznik.Id));
             command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.ZodpovednyZamestnanec.Id));
             command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav.Id));
@@ -38,6 +40,7 @@ namespace Databse
 
             var command = db.CreateCommand(SQL_UPDATE);
             command.Parameters.Add(new SqlParameter("@p_zakaznikId", t.Zakaznik.Id));
+            command.Parameters.Add(new SqlParameter("@p_name", t.Name));
             command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.ZodpovednyZamestnanec.Id));
             command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav.Id));
             command.Parameters.Add(new SqlParameter("@p_adresa", t.Adresa));
@@ -55,6 +58,7 @@ namespace Databse
                 var z = new ZakazkaModel
                 {
                     Id = reader.GetInt32(++i),
+                    Name = reader.GetString(++i)
                 };
 
                 var zakaznik = new UzivatelEntity().Select(reader.GetInt32(++i));

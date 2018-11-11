@@ -4,6 +4,7 @@ namespace Models
 {
     public class ZakazkaModel : BaseModel
     {
+        public string Name { get; set; }
         public UzivatelModel Zakaznik { get; set; }
         public UzivatelModel ZodpovednyZamestnanec { get; set; }
         public StavModel Stav { get; set; }

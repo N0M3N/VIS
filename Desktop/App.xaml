@@ -1,8 +1,11 @@
 ﻿<Application x:Class="Desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:Desktop.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <converters:MultiBindingIntoArrayConverter x:Key="MultiBindingIntoArrayConverter" />
+
         <SolidColorBrush x:Key="Accent1" Color="#CAD2C5" />
         <SolidColorBrush x:Key="Accent2" Color="#84A98C" />
         <SolidColorBrush x:Key="Accent3" Color="#52796F" />
