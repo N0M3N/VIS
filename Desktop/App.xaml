@@ -4,6 +4,20 @@
              xmlns:local="clr-namespace:Desktop"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="Accent1" Color="#CAD2C5" />
+        <SolidColorBrush x:Key="Accent2" Color="#84A98C" />
+        <SolidColorBrush x:Key="Accent3" Color="#52796F" />
+        <SolidColorBrush x:Key="Accent4" Color="#354F52" />
+        <SolidColorBrush x:Key="Accent5" Color="#2F3E46" />
+
+        <Style TargetType="DockPanel" x:Key="NavBar">
+            <Setter Property="Background" Value="{StaticResource Accent5}" />
+        </Style>
+        
+        <Style TargetType="TextBlock" x:Key="Logo">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="{StaticResource Accent3}" />
+            <Setter Property="Margin" Value="15" />
+        </Style>
     </Application.Resources>
 </Application>
