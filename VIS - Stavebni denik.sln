@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9E06D624-96FC-4F33-84E1-D5E299D68513}"
 	ProjectSection(SolutionItems) = preProject
 		Create.sql = Create.sql
+		Init.sql = Init.sql
 		SQL Model\Relational_1.png = SQL Model\Relational_1.png
 	EndProjectSection
 EndProject
