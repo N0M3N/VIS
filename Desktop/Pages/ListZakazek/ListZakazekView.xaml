@@ -1,16 +1,16 @@
-﻿<UserControl x:Class="Desktop.Controls.ListZakazekControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Desktop.Controls"
-             xmlns:extensions="clr-namespace:Desktop.Extensions"
-             DataContext="{extensions:Resolve local:ListZakazekViewModel}"
-             d:DataContext="{d:DesignInstance Type=local:ListZakazekViewModel, IsDesignTimeCreatable=False}"
-             mc:Ignorable="d">
+﻿<Page x:Class="Desktop.Pages.ListZakazek.ListZakazekView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Desktop.Pages.ListZakazek"
+      xmlns:extensions="clr-namespace:Desktop.Extensions"
+      DataContext="{extensions:Resolve local:ListZakazekViewModel}"
+      d:DataContext="{d:DesignInstance Type=local:ListZakazekViewModel, IsDesignTimeCreatable=False}"
+      mc:Ignorable="d">
 
     <DockPanel LastChildFill="True">
-        <Button DockPanel.Dock="Bottom" Margin="0 10 0 0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}">Continue</Button>
+        <Button DockPanel.Dock="Bottom" Margin="0 10 0 0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Command="{Binding ContinueCommand}">Continue</Button>
         <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding Zakazky}" SelectionMode="Single" SelectedItem="{Binding Selected.Value}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Nazev" Binding="{Binding Name}" />
@@ -34,4 +34,5 @@
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
-</UserControl>
+</Page>
+

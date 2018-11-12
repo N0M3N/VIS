@@ -1,17 +1,24 @@
 ﻿using Desktop.Attributes;
+using Desktop.Extensions;
+using Desktop.Messages;
+using Desktop.Services;
 using Models;
 using Reactive.Bindings;
 using System;
+using System.Windows.Controls;
 
-namespace Desktop.Controls
+namespace Desktop.Pages.ListZakazek
 {
     [ViewModel]
     public class ListZakazekViewModel : IDisposable
     {
+        private readonly INavigationService navigation;
+
         public ReactiveCollection<ZakazkaModel> Zakazky { get; }
         public ReactiveProperty<ZakazkaModel> Selected { get; }
+        public ReactiveCommand<ZakazkaModel> ContinueCommand { get; }
 
-        public ListZakazekViewModel()
+        public ListZakazekViewModel(INavigationService navigation)
         {
             Zakazky = new ReactiveCollection<ZakazkaModel>();
             Zakazky.AddRangeOnScheduler(new[]
@@ -29,9 +36,16 @@ namespace Desktop.Controls
                     Stav = new StavModel{ Id = 0, Nazev = "Dokoncena" },
                     Deadline = DateTime.Now, Adresa = "Adress2" },
             });
-            //TODO: Zakazky.AddRangeOnScheduler(DB.GetAllByUser(CurrentUserId));
 
+            ContinueCommand = ReactiveCommandHelper.Create<ZakazkaModel>(Navigate);
             Selected = new ReactiveProperty<ZakazkaModel>();
+            this.navigation = navigation;
+        }
+
+        private void Navigate(ZakazkaModel obj)
+        {
+            NavigateWithZakazkaMessage.Zakazka = obj;
+            navigation.Navigate((Page) Activator.CreateInstance(NavigateWithZakazkaMessage.Page));
         }
 
         public void Dispose()

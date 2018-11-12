@@ -109,14 +109,15 @@
     <Compile Include="Connector\IZakazkyConnector.cs" />
     <Compile Include="Exceptions\ConnectionFailedException.cs" />
     <Compile Include="Connector\ZakazkyConnector.cs" />
-    <Compile Include="Controls\ListZakazekControl.xaml.cs">
-      <DependentUpon>ListZakazekControl.xaml</DependentUpon>
+    <Compile Include="Pages\ListZakazek\ListZakazekView.xaml.cs">
+      <DependentUpon>ListZakazekView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ListZakazekViewModel.cs" />
+    <Compile Include="Pages\ListZakazek\ListZakazekViewModel.cs" />
     <Compile Include="Converters\MultiBindingIntoArrayConverter.cs" />
     <Compile Include="Extensions\ReactiveCommandHelper.cs" />
     <Compile Include="Extensions\ResolveExtension.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Messages\NavigateWithZakazkaMessage.cs" />
     <Compile Include="Pages\DetailZakazky\DetailZakazkyView.xaml.cs">
       <DependentUpon>DetailZakazkyView.xaml</DependentUpon>
     </Compile>
@@ -131,10 +132,6 @@
     <Compile Include="Pages\Login\LoginViewModel.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Page Include="Controls\ListZakazekControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -152,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Home\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ListZakazek\ListZakazekView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

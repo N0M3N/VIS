@@ -1,6 +1,9 @@
 ﻿using Desktop.Attributes;
 using Desktop.Extensions;
+using Desktop.Messages;
+using Desktop.Pages;
 using Desktop.Pages.DetailZakazky;
+using Desktop.Pages.ListZakazek;
 using Desktop.Services;
 using Models;
 using Reactive.Bindings;
@@ -29,10 +32,8 @@ namespace Desktop
         private void Navigate(Type type)
         {
             var obj = Activator.CreateInstance(type);
-            if (obj is Page page)
-            {
-                navigation.Navigate(page);
-            }
+            NavigateWithZakazkaMessage.Page = type;
+            navigation.Navigate(new ListZakazekView());
         }
 
         public void Dispose()
