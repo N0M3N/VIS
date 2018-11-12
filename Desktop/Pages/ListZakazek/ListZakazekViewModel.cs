@@ -5,22 +5,26 @@ using Desktop.Services;
 using Models;
 using Reactive.Bindings;
 using System;
+using System.Reactive.Subjects;
 using System.Windows.Controls;
 
 namespace Desktop.Pages.ListZakazek
 {
     [ViewModel]
-    public class ListZakazekViewModel : IDisposable
+    internal class ListZakazekViewModel : IDisposable
     {
         private readonly INavigationService navigation;
+        private readonly NavigateWithZakazkaMessage message;
 
+        public ReactiveProperty<bool> CanExecute { get; }
         public ReactiveCollection<ZakazkaModel> Zakazky { get; }
         public ReactiveProperty<ZakazkaModel> Selected { get; }
         public ReactiveCommand<ZakazkaModel> ContinueCommand { get; }
 
-        public ListZakazekViewModel(INavigationService navigation)
+        public ListZakazekViewModel(INavigationService navigation, NavigateWithZakazkaMessage message)
         {
             Zakazky = new ReactiveCollection<ZakazkaModel>();
+            // TODO: Replace with remote connector
             Zakazky.AddRangeOnScheduler(new[]
             {
                 new ZakazkaModel { Id = 1,
@@ -37,21 +41,27 @@ namespace Desktop.Pages.ListZakazek
                     Deadline = DateTime.Now, Adresa = "Adress2" },
             });
 
-            ContinueCommand = ReactiveCommandHelper.Create<ZakazkaModel>(Navigate);
+            CanExecute = new ReactiveProperty<bool>();
             Selected = new ReactiveProperty<ZakazkaModel>();
+            Selected.PropertyChanged += (sender, args) => CanExecute.Value = Selected.Value != null;
+            ContinueCommand = ReactiveCommandHelper.Create<ZakazkaModel>(Navigate);
+
             this.navigation = navigation;
+            this.message = message;
         }
 
         private void Navigate(ZakazkaModel obj)
         {
-            NavigateWithZakazkaMessage.Zakazka = obj;
-            navigation.Navigate((Page) Activator.CreateInstance(NavigateWithZakazkaMessage.Page));
+            message.Zakazka = obj;
+            navigation.Navigate((Page) Activator.CreateInstance(message.PageType));
         }
 
         public void Dispose()
         {
             Zakazky.Dispose();
             Selected.Dispose();
+            ContinueCommand.Dispose();
+            CanExecute.Dispose();
         }
     }
 }

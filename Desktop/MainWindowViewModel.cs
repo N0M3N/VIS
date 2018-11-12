@@ -1,38 +1,37 @@
 ﻿using Desktop.Attributes;
 using Desktop.Extensions;
 using Desktop.Messages;
-using Desktop.Pages;
-using Desktop.Pages.DetailZakazky;
 using Desktop.Pages.ListZakazek;
 using Desktop.Services;
 using Models;
 using Reactive.Bindings;
 using System;
-using System.Windows.Controls;
 
 namespace Desktop
 {
     [ViewModel(Scope = ViewModelAttribute.ScopeType.SingleInstance)]
-    public class MainWindowViewModel : IDisposable
+    internal class MainWindowViewModel : IDisposable
     {
         private readonly INavigationService navigation;
+        private readonly NavigateWithZakazkaMessage message;
 
         public ReactiveProperty<UzivatelModel> CurrentUser { get; }
         public ReactiveProperty<MenuSelectionEnum> MenuSelection { get; }
         public ReactiveCommand<Type> NavigationCommand { get; }
 
-        public MainWindowViewModel(INavigationService navigation)
+        public MainWindowViewModel(INavigationService navigation, NavigateWithZakazkaMessage message)
         {
             CurrentUser = new ReactiveProperty<UzivatelModel>();
             MenuSelection = new ReactiveProperty<MenuSelectionEnum>(MenuSelectionEnum.None);
             NavigationCommand = ReactiveCommandHelper.Create<Type>(Navigate);
             this.navigation = navigation;
+            this.message = message;
         }
 
         private void Navigate(Type type)
         {
             var obj = Activator.CreateInstance(type);
-            NavigateWithZakazkaMessage.Page = type;
+            message.PageType = type;
             navigation.Navigate(new ListZakazekView());
         }
 

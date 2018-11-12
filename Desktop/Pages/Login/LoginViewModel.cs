@@ -8,7 +8,7 @@ using System;
 namespace Desktop.Pages.Login
 {
     [ViewModel]
-    public class LoginViewModel : IDisposable
+    internal class LoginViewModel : IDisposable
     {
         private readonly INavigationService navigation;
         private readonly MainWindowViewModel mainWIndow;

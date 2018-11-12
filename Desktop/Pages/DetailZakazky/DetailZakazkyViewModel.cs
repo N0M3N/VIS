@@ -1,4 +1,5 @@
 ﻿using Desktop.Attributes;
+using Desktop.Messages;
 using Models;
 using Reactive.Bindings;
 using System;
@@ -6,14 +7,16 @@ using System;
 namespace Desktop.Pages.DetailZakazky
 {
     [ViewModel]
-    public class DetailZakazkyViewModel : IDisposable
+    internal class DetailZakazkyViewModel : IDisposable
     {
         public ReactiveProperty<ZakazkaModel> VybranaZakazka { get; }
 
-        public DetailZakazkyViewModel()
+        public DetailZakazkyViewModel(NavigateWithZakazkaMessage message)
         {
-            VybranaZakazka = new ReactiveProperty<ZakazkaModel>();
+            VybranaZakazka = new ReactiveProperty<ZakazkaModel>(message.Zakazka);
         }
+
+
         
         public void Dispose()
         {

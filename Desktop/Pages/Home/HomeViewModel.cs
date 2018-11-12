@@ -4,7 +4,7 @@ using System;
 namespace Desktop.Pages.Home
 {
     [ViewModel]
-    public class HomeViewModel : IDisposable
+    internal class HomeViewModel : IDisposable
     {
         public void Dispose()
         {

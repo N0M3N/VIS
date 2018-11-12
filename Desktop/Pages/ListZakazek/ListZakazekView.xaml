@@ -10,7 +10,7 @@
       mc:Ignorable="d">
 
     <DockPanel LastChildFill="True">
-        <Button DockPanel.Dock="Bottom" Margin="0 10 0 0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Command="{Binding ContinueCommand}">Continue</Button>
+        <Button DockPanel.Dock="Bottom" Margin="0 10 0 0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Command="{Binding ContinueCommand}" IsEnabled="{Binding CanExecute.Value}">Continue</Button>
         <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding Zakazky}" SelectionMode="Single" SelectedItem="{Binding Selected.Value}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Nazev" Binding="{Binding Name}" />
