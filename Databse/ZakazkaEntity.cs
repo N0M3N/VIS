@@ -6,13 +6,13 @@ namespace Databse
 {
     public class ZakazkaEntity : Entity<ZakazkaModel>
     {
-        protected override string SQL_SELECT => "SELECT [Id], [Name], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka];";
+        protected override string SQL_SELECT => "SELECT [Id], [Nazev], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka];";
 
-        protected override string SQL_SELECT_ID => "SELECT [Id], [Name], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
+        protected override string SQL_SELECT_ID => "SELECT [Id], [Nazev], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
 
-        protected override string SQL_INSERT => "INSERT INTO [dbo].[Zakazka] ([Name], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline]) VALUES (@p_name, @p_zakaznikId, @p_zamestnanecId, @p_stavId, @p_adresa, @p_deadline);";
+        protected override string SQL_INSERT => "INSERT INTO [dbo].[Zakazka] ([Nazev], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline]) VALUES (@p_name, @p_zakaznikId, @p_zamestnanecId, @p_stavId, @p_adresa, @p_deadline);";
 
-        protected override string SQL_UPDATE => "UPDATE [dbo].[Zakazka] SET [Name] = @p_name, [Zakaznik-Id] = @p_zakaznikId, [UZamestnanec-Id] = @p_zamestnanecId, [Stav-Id] = @p_stavId, [Adresa] = @p_adresa, [Deadline] = @p_deadline WHERE [Id] = @p_Id;";
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Zakazka] SET [Nazev] = @p_name, [Zakaznik-Id] = @p_zakaznikId, [UZamestnanec-Id] = @p_zamestnanecId, [Stav-Id] = @p_stavId, [Adresa] = @p_adresa, [Deadline] = @p_deadline WHERE [Id] = @p_Id;";
 
         protected override string SQL_DELETE => "DELETE FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
 

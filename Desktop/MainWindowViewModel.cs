@@ -24,6 +24,7 @@ namespace Desktop
             CurrentUser = new ReactiveProperty<UzivatelModel>();
             MenuSelection = new ReactiveProperty<MenuSelectionEnum>(MenuSelectionEnum.None);
             NavigationCommand = ReactiveCommandHelper.Create<Type>(Navigate);
+
             this.navigation = navigation;
             this.message = message;
         }
