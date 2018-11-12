@@ -22,11 +22,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/zakazka/{id}")]
-        public IHttpActionResult Get(int id)
+        [Route("api/zakazka/{userId}")]
+        public IHttpActionResult Get([FromUri] int userId)
         {
-            var zakazky = DB_Zakazky.Select(id);
-            if (zakazky != null) return Ok(zakazky);
+            var zakazky = DB_Zakazky
+                .Select()
+                .Where(x => x.ZodpovednyZamestnanec.Id == userId || x.Zakaznik.Id == userId);
+            if (zakazky.Any()) return Ok(zakazky);
             return NotFound();
         }
     }

@@ -2,6 +2,7 @@
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
 using Desktop.Attributes;
+using Desktop.Connector;
 using Desktop.Messages;
 using Desktop.Services;
 using System;
@@ -25,11 +26,19 @@ namespace Desktop
             RegisterServices(builder);
             RegisterViewModels(builder);
             RegisterMessages(builder);
+            RegisterConnectors(builder);
 
             container = builder.Build();
 
             ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container));
             base.OnStartup(e);
+        }
+
+        private void RegisterConnectors(ContainerBuilder builder)
+        {
+            builder.RegisterType<ZakazkyConnector>()
+                .As<IZakazkyConnector>()
+                .InstancePerDependency();
         }
 
         private void RegisterMessages(ContainerBuilder builder)

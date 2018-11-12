@@ -40,7 +40,7 @@ namespace Databse
             if (Connection.State != ConnectionState.Open)
             {
                 var connectionstring = ConfigurationManager.AppSettings["connectionString"];
-                ret = Connect();
+                ret = Connect(connectionstring);
             }
             return ret;
         }

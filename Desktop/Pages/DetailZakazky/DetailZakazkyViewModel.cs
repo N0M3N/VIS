@@ -15,8 +15,6 @@ namespace Desktop.Pages.DetailZakazky
         {
             VybranaZakazka = new ReactiveProperty<ZakazkaModel>(message.Zakazka);
         }
-
-
         
         public void Dispose()
         {

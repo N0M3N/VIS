@@ -1,4 +1,6 @@
-﻿using Desktop.Attributes;
+﻿using CommonServiceLocator;
+using Desktop.Attributes;
+using Desktop.Connector;
 using Desktop.Extensions;
 using Desktop.Messages;
 using Desktop.Services;
@@ -14,6 +16,7 @@ namespace Desktop.Pages.ListZakazek
     internal class ListZakazekViewModel : IDisposable
     {
         private readonly INavigationService navigation;
+        private readonly IZakazkyConnector zakazkyConnector;
         private readonly NavigateWithZakazkaMessage message;
 
         public ReactiveProperty<bool> CanExecute { get; }
@@ -21,33 +24,24 @@ namespace Desktop.Pages.ListZakazek
         public ReactiveProperty<ZakazkaModel> Selected { get; }
         public ReactiveCommand<ZakazkaModel> ContinueCommand { get; }
 
-        public ListZakazekViewModel(INavigationService navigation, NavigateWithZakazkaMessage message)
+        public ListZakazekViewModel(INavigationService navigation, IZakazkyConnector zakazkyConnector, NavigateWithZakazkaMessage message)
         {
             Zakazky = new ReactiveCollection<ZakazkaModel>();
-            // TODO: Replace with remote connector
-            Zakazky.AddRangeOnScheduler(new[]
-            {
-                new ZakazkaModel { Id = 1,
-                    Name = "Dummy 1",
-                    Zakaznik =new UzivatelModel { JeZakaznik = true, JeZamestnanec = false, Jmeno = "Pavel", Prijmeni = "Cucak" },
-                    ZodpovednyZamestnanec = new UzivatelModel{ JeZakaznik = false, JeZamestnanec = true, Jmeno = "Zdenek", Prijmeni = "Steindl" },
-                    Stav = new StavModel{ Id = 0, Nazev = "Nova" },
-                    Deadline = DateTime.Now, Adresa = "Adress1" },
-                new ZakazkaModel { Id = 2,
-                    Name = "Dummy 2",
-                    Zakaznik =new UzivatelModel { JeZakaznik = true, JeZamestnanec = false, Jmeno = "Pavel", Prijmeni = "Cucak" },
-                    ZodpovednyZamestnanec = new UzivatelModel{ JeZakaznik = false, JeZamestnanec = true, Jmeno = "Zdenek", Prijmeni = "Steindl" },
-                    Stav = new StavModel{ Id = 0, Nazev = "Dokoncena" },
-                    Deadline = DateTime.Now, Adresa = "Adress2" },
-            });
-
             CanExecute = new ReactiveProperty<bool>();
             Selected = new ReactiveProperty<ZakazkaModel>();
             Selected.PropertyChanged += (sender, args) => CanExecute.Value = Selected.Value != null;
             ContinueCommand = ReactiveCommandHelper.Create<ZakazkaModel>(Navigate);
 
             this.navigation = navigation;
+            this.zakazkyConnector = zakazkyConnector;
             this.message = message;
+
+            Populate();
+        }
+
+        private async void Populate()
+        {
+            Zakazky.AddRangeOnScheduler(await zakazkyConnector.GetAllByUserAsync(ServiceLocator.Current.GetInstance<MainWindowViewModel>().CurrentUser.Value));
         }
 
         private void Navigate(ZakazkaModel obj)
