@@ -1,5 +1,5 @@
 ﻿using Desktop.Attributes;
-using Desktop.Extensions;
+using Desktop.Utils;
 using Desktop.Pages.Home;
 using Desktop.Services;
 using Reactive.Bindings;

@@ -1,7 +1,7 @@
 ﻿using CommonServiceLocator;
 using Desktop.Attributes;
 using Desktop.Connector;
-using Desktop.Extensions;
+using Desktop.Utils;
 using Desktop.Messages;
 using Desktop.Services;
 using Models;
