@@ -70,7 +70,7 @@ namespace Databse
                 var stav = new StavEntity().Select(reader.GetInt32(++i));
                 z.Stav = stav;
                 z.Adresa = reader.GetString(++i);
-                z.Deadline = reader.GetDateTime(++i);
+                z.Deadline = reader.GetDateTime(++i).ToShortDateString();
 
                 zakazky.Add(z);
             }

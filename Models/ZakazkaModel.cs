@@ -26,6 +26,12 @@ namespace Models
         public string Adresa { get; set; }
 
         [DataMember]
-        public DateTime Deadline { get; set; }
+        public string Deadline {
+            get => deadline.ToShortDateString();
+            set => deadline = Convert.ToDateTime(value);
+        }
+
+        private DateTime deadline;
+
     }
 }
