@@ -1,6 +1,5 @@
 ﻿using Databse;
 using Models;
-using System.Linq;
 using System.Web.Http;
 
 namespace WebAPI.Controllers
@@ -11,7 +10,7 @@ namespace WebAPI.Controllers
 
         public UzivatelController()
         {
-            this.DB_Uzivatel = new UzivatelEntity();
+            DB_Uzivatel = new UzivatelEntity();
         }
 
         [HttpPost]

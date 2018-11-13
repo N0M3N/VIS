@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,11 +35,10 @@ namespace Desktop.Connector
             {
                 using (var client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders
-                          .Accept
-                          .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                    var jsonContent = new StringContent(ToJsonFrom(content), Encoding.UTF8, "application/json");
 
-                    var result = await client.PostAsync(uri, new StringContent(ToJsonFrom(content)));
+                    var result = await client.PostAsync(uri, jsonContent);
                     if (result.IsSuccessStatusCode)
                     {
                         return DeserializeAs<TResponse>(await result.Content.ReadAsStringAsync());

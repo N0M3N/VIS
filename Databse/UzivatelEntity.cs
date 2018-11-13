@@ -23,6 +23,8 @@ namespace Databse
         public UzivatelModel Login(string login, string password)
         {
             var db = new Database();
+            db.Connect();
+
             var command = db.CreateCommand(SQL_LOGIN);
             command.Parameters.Add(new SqlParameter("@p_login", login));
             command.Parameters.Add(new SqlParameter("@p_heslo", password));
