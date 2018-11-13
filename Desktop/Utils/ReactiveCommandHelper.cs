@@ -1,7 +1,7 @@
 ﻿using Reactive.Bindings;
 using System;
 
-namespace Desktop.Extensions
+namespace Desktop.Utils
 {
     public static class ReactiveCommandHelper
     {

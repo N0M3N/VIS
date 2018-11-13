@@ -116,8 +116,8 @@
     </Compile>
     <Compile Include="Pages\ListZakazek\ListZakazekViewModel.cs" />
     <Compile Include="Converters\MultiBindingIntoArrayConverter.cs" />
-    <Compile Include="Extensions\ReactiveCommandHelper.cs" />
-    <Compile Include="Extensions\ResolveExtension.cs" />
+    <Compile Include="Utils\ReactiveCommandHelper.cs" />
+    <Compile Include="Utils\ResolveExtension.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Messages\NavigateWithZakazkaMessage.cs" />
     <Compile Include="Pages\DetailZakazky\DetailZakazkyView.xaml.cs">

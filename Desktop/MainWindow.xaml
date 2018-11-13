@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        xmlns:extensions="clr-namespace:Desktop.Extensions"
+        xmlns:utils="clr-namespace:Desktop.Utils"
         xmlns:local="clr-namespace:Desktop"
         xmlns:detailzakazky="clr-namespace:Desktop.Pages.DetailZakazky"
-        DataContext="{extensions:Resolve local:MainWindowViewModel}"
+        DataContext="{utils:Resolve local:MainWindowViewModel}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Title="VIS - Stavebni denik a dochazka">
 

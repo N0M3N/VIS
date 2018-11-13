@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Desktop.Pages.DetailZakazky"
-      xmlns:extensions="clr-namespace:Desktop.Extensions"
-      DataContext="{extensions:Resolve local:DetailZakazkyViewModel}"
+      xmlns:utils="clr-namespace:Desktop.Utils"
+      DataContext="{utils:Resolve local:DetailZakazkyViewModel}"
       d:DataContext="{d:DesignInstance Type=local:DetailZakazkyViewModel, IsDesignTimeCreatable=False}"
       mc:Ignorable="d">
     

@@ -1,6 +1,6 @@
 ﻿using Desktop.Attributes;
+using Desktop.Utils;
 using Desktop.Connector;
-using Desktop.Extensions;
 using Desktop.Pages.Home;
 using Desktop.Services;
 using Reactive.Bindings;

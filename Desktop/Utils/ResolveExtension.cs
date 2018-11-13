@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Markup;
 
-namespace Desktop.Extensions
+namespace Desktop.Utils
 {
     public class ResolveExtension : MarkupExtension
     {

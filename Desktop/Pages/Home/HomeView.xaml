@@ -3,9 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:extensions="clr-namespace:Desktop.Extensions"
+      xmlns:utils="clr-namespace:Desktop.Utils"
       xmlns:local="clr-namespace:Desktop.Pages.Home"
-      DataContext="{extensions:Resolve local:HomeViewModel}"
+      DataContext="{utils:Resolve local:HomeViewModel}"
       d:DataContext="{d:DesignInstance Type=local:HomeViewModel, IsDesignTimeCreatable=False}"
       mc:Ignorable="d">
 

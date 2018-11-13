@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Desktop.Pages.Login"
-      xmlns:extensions="clr-namespace:Desktop.Extensions"
-      DataContext="{extensions:Resolve local:LoginViewModel}"
+      xmlns:utils="clr-namespace:Desktop.Utils"
+      DataContext="{utils:Resolve local:LoginViewModel}"
       d:DataContext="{d:DesignInstance Type=local:LoginViewModel, IsDesignTimeCreatable=False}"
       mc:Ignorable="d">
 
