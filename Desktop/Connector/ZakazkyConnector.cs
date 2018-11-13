@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Models;
 
 namespace Desktop.Connector
 {
@@ -12,10 +11,7 @@ namespace Desktop.Connector
         {
             try
             {
-                using (var client = new HttpClient())
-                {
-                    return await TryHttpGetAs<IEnumerable<ZakazkaModel>>(client, $"{WebApiUrl}/api/zakazka/{currentUser.Id}");
-                }
+                return await TryHttpGetAs<IEnumerable<ZakazkaModel>>($"{WebApiUrl}/api/zakazka/{currentUser.Id}");
             }
             catch (Exception e)
             {

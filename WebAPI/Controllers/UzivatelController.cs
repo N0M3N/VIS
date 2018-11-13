@@ -1,4 +1,5 @@
 ﻿using Databse;
+using Models;
 using System.Linq;
 using System.Web.Http;
 
@@ -14,10 +15,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("api/login/{login}")]
-        public IHttpActionResult Login([FromUri] string login, [FromBody] string password)
+        [Route("api/login")]
+        public IHttpActionResult Login([FromBody] LoginModel creds)
         {
-            var user = DB_Uzivatel.Login(login, password);
+            var user = DB_Uzivatel.Login(creds.Login, creds.Password);
             if (user != null)
                 return Ok(user);
             else return Unauthorized();

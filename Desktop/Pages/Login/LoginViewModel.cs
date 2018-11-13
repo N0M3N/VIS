@@ -5,6 +5,7 @@ using Desktop.Pages.Home;
 using Desktop.Services;
 using Reactive.Bindings;
 using System;
+using Models;
 
 namespace Desktop.Pages.Login
 {
@@ -31,7 +32,7 @@ namespace Desktop.Pages.Login
 
         private async void LoginAction()
         {
-            var user = await uzivatelConnector.Login(Login.Value, Password.Value);
+            var user = await uzivatelConnector.Login(new LoginModel { Login = Login.Value, Password = Password.Value });
             if(user != null)
             {
                 mainWIndow.CurrentUser.Value = user;
