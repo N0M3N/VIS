@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using Models;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models;
 
 namespace Desktop.Connector
 {
@@ -9,9 +9,13 @@ namespace Desktop.Connector
     {
         public async Task<IEnumerable<ZakazkaModel>> GetAllByUserAsync(UzivatelModel currentUser)
         {
-            using(var client = new HttpClient())
+            try
             {
-                return await TryHttpRequestAs<IEnumerable<ZakazkaModel>>(client, $"{WebApiUrl}/api/zakazka/{currentUser.Id}");
+                return await TryHttpGetAs<IEnumerable<ZakazkaModel>>($"{WebApiUrl}/api/zakazka/{currentUser.Id}");
+            }
+            catch (Exception e)
+            {
+                throw new ConnectionFailedException(nameof(GetAllByUserAsync), e);
             }
         }
     }

@@ -1,9 +1,11 @@
 ﻿using Desktop.Attributes;
 using Desktop.Utils;
+using Desktop.Connector;
 using Desktop.Pages.Home;
 using Desktop.Services;
 using Reactive.Bindings;
 using System;
+using Models;
 
 namespace Desktop.Pages.Login
 {
@@ -11,27 +13,31 @@ namespace Desktop.Pages.Login
     internal class LoginViewModel : IDisposable
     {
         private readonly INavigationService navigation;
+        private readonly IUzivatelConnector uzivatelConnector;
         private readonly MainWindowViewModel mainWIndow;
 
         public ReactiveProperty<string> Login { get; }
         public ReactiveProperty<string> Password { get; }
         public ReactiveCommand LogInCommand { get; }
 
-        public LoginViewModel(INavigationService navigation, MainWindowViewModel mainWIndow)
+        public LoginViewModel(INavigationService navigation, IUzivatelConnector uzivatelConnector, MainWindowViewModel mainWIndow)
         {
             this.navigation = navigation;
+            this.uzivatelConnector = uzivatelConnector;
             this.mainWIndow = mainWIndow;
             Login = new ReactiveProperty<string>();
             Password = new ReactiveProperty<string>();
             LogInCommand = ReactiveCommandHelper.Create(LoginAction);
         }
 
-        private void LoginAction()
+        private async void LoginAction()
         {
-            // TODO: Add login service
-            mainWIndow.CurrentUser.Value = new Models.UzivatelModel { JeZamestnanec = true };
-            // TODO: Navigate to a page
-            navigation.Navigate(new HomeView());
+            var user = await uzivatelConnector.Login(new LoginModel { Login = Login.Value, Password = Password.Value });
+            if(user != null)
+            {
+                mainWIndow.CurrentUser.Value = user;
+                navigation.Navigate(new HomeView());
+            }
         }
 
         public void Dispose()

@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Desktop
 {
@@ -23,6 +24,9 @@ namespace Desktop
         {
             var builder = new ContainerBuilder();
 
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
+
             RegisterServices(builder);
             RegisterViewModels(builder);
             RegisterMessages(builder);
@@ -34,10 +38,17 @@ namespace Desktop
             base.OnStartup(e);
         }
 
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+        }
+
         private void RegisterConnectors(ContainerBuilder builder)
         {
             builder.RegisterType<ZakazkyConnector>()
                 .As<IZakazkyConnector>()
+                .InstancePerDependency();
+            builder.RegisterType<UzivatelConnector>()
+                .As<IUzivatelConnector>()
                 .InstancePerDependency();
         }
 
