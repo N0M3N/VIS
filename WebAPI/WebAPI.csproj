@@ -200,8 +200,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -225,12 +223,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -246,7 +238,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -274,8 +265,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Databse\Database.csproj">
