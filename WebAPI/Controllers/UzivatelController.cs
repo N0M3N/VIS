@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("api/login")]
+        [Route("login")]
         public IHttpActionResult Login([FromBody] LoginModel creds)
         {
             var user = DB_Uzivatel.Login(creds.Login, creds.Password);
