@@ -11,7 +11,7 @@ namespace Desktop.Connector
         {
             try
             {
-                return await TryHttpGetAs<IEnumerable<ZakazkaModel>>($"{WebApiUrl}/api/zakazka/{currentUser.Id}");
+                return await TryHttpGetAs<IEnumerable<ZakazkaModel>>($"{WebApiUrl}/zakazka/{currentUser.Id}");
             }
             catch (Exception e)
             {

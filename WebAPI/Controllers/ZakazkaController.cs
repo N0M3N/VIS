@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/zakazka")]
+        [Route("zakazka")]
         public IHttpActionResult Get()
         {
             var zakazky = DB_Zakazky.Select();
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/zakazka/{userId}")]
+        [Route("zakazka/{userId}")]
         public IHttpActionResult Get([FromUri] int userId)
         {
             var zakazky = DB_Zakazky

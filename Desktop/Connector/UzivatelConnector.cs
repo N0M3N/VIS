@@ -7,7 +7,7 @@ namespace Desktop.Connector
     {
         public Task<UzivatelModel> Login(LoginModel creds)
         {
-            return TryHttpPostAs<LoginModel, UzivatelModel>($"{WebApiUrl}/api/login", creds);
+            return TryHttpPostAs<LoginModel, UzivatelModel>($"{WebApiUrl}/login", creds);
         }
     }
 }
