@@ -1,4 +1,5 @@
 ﻿using Databse;
+using Models;
 using System.Linq;
 using System.Web.Http;
 
@@ -12,23 +13,27 @@ namespace WebAPI.Controllers
             DB_Zakazky = new ZakazkaEntity();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("zakazka")]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetByUser([FromBody] UzivatelModel uzivatel)
         {
-            var zakazky = DB_Zakazky.Select();
-            if (zakazky.Any()) return Ok(zakazky);
+            var zakazky = DB_Zakazky
+                .Select()
+                .Where(x => x.ZodpovednyZamestnanec.Id == uzivatel.Id || x.Zakaznik.Id == uzivatel.Id);
+
+            if (zakazky.Any())
+                return Ok(zakazky);
             return NotFound();
         }
 
         [HttpGet]
-        [Route("zakazka/{userId}")]
-        public IHttpActionResult Get([FromUri] int userId)
+        [Route("zakazka/{id}")]
+        public IHttpActionResult Get([FromUri] int id)
         {
-            var zakazky = DB_Zakazky
-                .Select()
-                .Where(x => x.ZodpovednyZamestnanec.Id == userId || x.Zakaznik.Id == userId);
-            if (zakazky.Any()) return Ok(zakazky);
+            var zakazka = DB_Zakazky.Select(id);
+
+            if (zakazka != null)
+                return Ok(zakazka);
             return NotFound();
         }
     }
