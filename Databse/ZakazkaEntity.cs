@@ -23,10 +23,10 @@ namespace Databse
 
             var command = db.CreateCommand(SQL_INSERT);
 
-            command.Parameters.Add(new SqlParameter("@p_name", t.Name));
+            command.Parameters.Add(new SqlParameter("@p_name", t.Nazev));
             command.Parameters.Add(new SqlParameter("@p_zakaznikId", t.Zakaznik.Id));
             command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.ZodpovednyZamestnanec.Id));
-            command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav.Id));
+            command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav));
             command.Parameters.Add(new SqlParameter("@p_adresa", t.Adresa));
             command.Parameters.Add(new SqlParameter("@p_deadline", t.Deadline));
 
@@ -40,9 +40,9 @@ namespace Databse
 
             var command = db.CreateCommand(SQL_UPDATE);
             command.Parameters.Add(new SqlParameter("@p_zakaznikId", t.Zakaznik.Id));
-            command.Parameters.Add(new SqlParameter("@p_name", t.Name));
+            command.Parameters.Add(new SqlParameter("@p_name", t.Nazev));
             command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.ZodpovednyZamestnanec.Id));
-            command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav.Id));
+            command.Parameters.Add(new SqlParameter("@p_stavId", t.Stav));
             command.Parameters.Add(new SqlParameter("@p_adresa", t.Adresa));
             command.Parameters.Add(new SqlParameter("@p_deadline", t.Deadline));
             command.Parameters.Add(new SqlParameter("@p_Id", t.Id));
@@ -58,7 +58,7 @@ namespace Databse
                 var z = new ZakazkaModel
                 {
                     Id = reader.GetInt32(++i),
-                    Name = reader.GetString(++i)
+                    Nazev = reader.GetString(++i)
                 };
 
                 var zakaznik = new UzivatelEntity().Select(reader.GetInt32(++i));
@@ -68,7 +68,7 @@ namespace Databse
                 z.ZodpovednyZamestnanec = zamestnanec;
 
                 var stav = new StavEntity().Select(reader.GetInt32(++i));
-                z.Stav = stav;
+                z.Stav = stav.Nazev;
                 z.Adresa = reader.GetString(++i);
                 z.Deadline = reader.GetDateTime(++i).ToShortDateString();
 

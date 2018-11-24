@@ -11,7 +11,7 @@ namespace Models
     public class ZakazkaModel : BaseModel
     {
         [DataMember]
-        public string Name { get; set; }
+        public string Nazev { get; set; }
 
         [DataMember]
         public UzivatelModel Zakaznik { get; set; }
@@ -20,7 +20,7 @@ namespace Models
         public UzivatelModel ZodpovednyZamestnanec { get; set; }
 
         [DataMember]
-        public StavModel Stav { get; set; }
+        public string Stav { get; set; }
 
         [DataMember]
         public string Adresa { get; set; }
