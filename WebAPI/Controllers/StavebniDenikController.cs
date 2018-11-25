@@ -1,4 +1,6 @@
 ﻿using Databse;
+using Models;
+using System.Linq;
 using System.Web.Http;
 
 namespace WebAPI.Controllers
@@ -13,10 +15,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/StavebniDenik/{id}")]
-        public IHttpActionResult Get(int id)
+        [Route("stavebniDenik")]
+        public IHttpActionResult Get(ZakazkaModel zakazka)
         {
-            var stavebniDenik = DB_stavebniDentik.Select(id);
+            var stavebniDenik = DB_stavebniDentik.Select().Where(x => x.Zakazka.Id == zakazka.Id);
             if (stavebniDenik != null) return Ok(stavebniDenik);
             return NotFound();
         }
