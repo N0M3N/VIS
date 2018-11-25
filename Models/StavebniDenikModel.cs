@@ -17,7 +17,7 @@ namespace Models
         public UzivatelModel Zamestnanec { get; set; }
 
         [DataMember]
-        public DateTime Datum { get; set; }
+        public string Datum { get; set; }
 
         [DataMember]
         public string Popis { get; set; }

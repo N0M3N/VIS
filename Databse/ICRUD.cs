@@ -7,8 +7,8 @@ namespace Databse
     {
         IEnumerable<T> Select();
         T Select(int id);
-        int Insert(T t);
-        int Update(T t);
-        int Delete(int id);
+        T Insert(T t);
+        T Update(T t);
+        bool Delete(int id);
     }
 }

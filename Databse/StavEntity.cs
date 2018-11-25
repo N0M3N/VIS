@@ -16,13 +16,13 @@ namespace Databse
 
         protected override string SQL_DELETE => throw new System.NotSupportedException();
 
-        public override int Insert(StavModel t)
+        public override StavModel Insert(StavModel t)
         {
             // DO NOT CHANGE
             throw new System.NotSupportedException();
         }
 
-        public override int Update(StavModel t)
+        public override StavModel Update(StavModel t)
         {
             // DO NOT CHANGE
             throw new System.NotSupportedException();

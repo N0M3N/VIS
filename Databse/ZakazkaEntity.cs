@@ -16,7 +16,7 @@ namespace Databse
 
         protected override string SQL_DELETE => "DELETE FROM [dbo].[Zakazka] WHERE [Id] = @p_id;";
 
-        public override int Insert(ZakazkaModel t)
+        public override ZakazkaModel Insert(ZakazkaModel t)
         {
             var db = new Database();
             db.Connect();
@@ -30,10 +30,12 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_adresa", t.Adresa));
             command.Parameters.Add(new SqlParameter("@p_deadline", t.Deadline));
 
-            return db.ExecuteNonQuery(command);
+            var id = db.InsertAndReturnId(command);
+            t.Id = id;
+            return t;
         }
 
-        public override int Update(ZakazkaModel t)
+        public override ZakazkaModel Update(ZakazkaModel t)
         {
             var db = new Database();
             db.Connect();
@@ -46,7 +48,10 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_adresa", t.Adresa));
             command.Parameters.Add(new SqlParameter("@p_deadline", t.Deadline));
             command.Parameters.Add(new SqlParameter("@p_Id", t.Id));
-            return db.ExecuteNonQuery(command);
+
+            var id = db.InsertAndReturnId(command);
+            t.Id = id;
+            return t;
         }
 
         protected override IEnumerable<ZakazkaModel> Read(SqlDataReader reader)

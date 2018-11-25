@@ -32,7 +32,7 @@ namespace Databse
             return Read(db.Select(command)).FirstOrDefault();
         }
 
-        public override int Insert(UzivatelModel t)
+        public override UzivatelModel Insert(UzivatelModel t)
         {
             var db = new Database();
             db.Connect();
@@ -42,13 +42,16 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_prijmeni", t.Prijmeni));
             command.Parameters.Add(new SqlParameter("@p_telefon", t.Telefon));
             command.Parameters.Add(new SqlParameter("@p_login", t.Login));
-            //command.Parameters.Add(new SqlParameter("@p_heslo", t.Heslo));
+            // command.Parameters.Add(new SqlParameter("@p_heslo", heslo));
             command.Parameters.Add(new SqlParameter("@p_jeZakaznik", t.JeZakaznik));
             command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestnanec));
-            return db.ExecuteNonQuery(command);
+
+            var id = db.InsertAndReturnId(command);
+            t.Id = id;
+            return t;
         }
 
-        public override int Update(UzivatelModel t)
+        public override UzivatelModel Update(UzivatelModel t)
         {
             var db = new Database();
             db.Connect();
@@ -58,11 +61,13 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_prijmeni", t.Prijmeni));
             command.Parameters.Add(new SqlParameter("@p_telefon", t.Telefon));
             command.Parameters.Add(new SqlParameter("@p_login", t.Login));
-            //command.Parameters.Add(new SqlParameter("@p_heslo", t.Heslo));
             command.Parameters.Add(new SqlParameter("@p_jeZakaznik", t.JeZakaznik));
             command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestnanec));
             command.Parameters.Add(new SqlParameter("@p_id", t.Id));
-            return db.ExecuteNonQuery(command);
+
+            var id = db.InsertAndReturnId(command);
+            t.Id = id;
+            return t;
         }
 
         protected override IEnumerable<UzivatelModel> Read(SqlDataReader reader)

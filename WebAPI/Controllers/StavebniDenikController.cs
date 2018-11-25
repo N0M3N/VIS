@@ -14,13 +14,24 @@ namespace WebAPI.Controllers
             DB_stavebniDentik = new StavebniDenikEntity();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("stavebniDenik")]
         public IHttpActionResult Get(ZakazkaModel zakazka)
         {
             var stavebniDenik = DB_stavebniDentik.Select().Where(x => x.Zakazka.Id == zakazka.Id);
             if (stavebniDenik != null) return Ok(stavebniDenik);
+
             return NotFound();
+        }
+
+        [HttpPut]
+        [Route("stavebniDenik")]
+        public IHttpActionResult Post(StavebniDenikModel model)
+        {
+            var zaznam = DB_stavebniDentik.Insert(model);
+            if (zaznam != null) return Ok(zaznam);
+
+            return BadRequest();
         }
     }
 }

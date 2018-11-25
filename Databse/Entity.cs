@@ -36,11 +36,11 @@ namespace Databse
             return Read(reader).FirstOrDefault();
         }
 
-        public abstract int Insert(T t);
+        public abstract T Insert(T t);
 
-        public abstract int Update(T t);
+        public abstract T Update(T t);
 
-        public virtual int Delete(int id)
+        public virtual bool Delete(int id)
         {
             var db = new Database();
             db.Connect();
@@ -48,7 +48,7 @@ namespace Databse
             var cmd = db.CreateCommand(SQL_DELETE);
             cmd.Parameters.Add(new SqlParameter("@p_id", id));
 
-            return db.ExecuteNonQuery(cmd);
+            return db.ExecuteNonQuery(cmd) == 1;
         }
 
         protected abstract IEnumerable<T> Read(SqlDataReader reader);
