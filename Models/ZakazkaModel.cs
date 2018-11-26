@@ -7,7 +7,6 @@ namespace Models
     [KnownType(typeof(BaseModel))]
     [KnownType(typeof(UzivatelModel))]
     [KnownType(typeof(StavModel))]
-    [KnownType(typeof(DateTime))]
     public class ZakazkaModel : BaseModel
     {
         [DataMember]
@@ -26,12 +25,6 @@ namespace Models
         public string Adresa { get; set; }
 
         [DataMember]
-        public string Deadline {
-            get => deadline.ToShortDateString();
-            set => deadline = Convert.ToDateTime(value);
-        }
-
-        private DateTime deadline;
-
+        public string Deadline { get; set; }
     }
 }

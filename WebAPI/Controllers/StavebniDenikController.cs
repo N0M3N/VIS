@@ -1,5 +1,6 @@
 ﻿using Databse;
 using Models;
+using Models.API_Models;
 using System.Linq;
 using System.Web.Http;
 
@@ -7,18 +8,22 @@ namespace WebAPI.Controllers
 {
     public class StavebniDenikController : ApiController
     {
-        private readonly StavebniDenikEntity DB_stavebniDentik;
+        private readonly StavebniDenikEntity DB_stavebniDenik;
+        private readonly ZakazkaEntity DB_zakazka;
+        private readonly UzivatelEntity DB_uzivatel;
 
         public StavebniDenikController()
         {
-            DB_stavebniDentik = new StavebniDenikEntity();
+            DB_stavebniDenik = new StavebniDenikEntity();
+            DB_zakazka = new ZakazkaEntity();
+            DB_uzivatel = new UzivatelEntity();
         }
 
-        [HttpPost]
-        [Route("stavebniDenik")]
-        public IHttpActionResult Get(ZakazkaModel zakazka)
+        [HttpGet]
+        [Route("stavebniDenik/zakazka/{id}")]
+        public IHttpActionResult ZaznamyZakazky([FromUri] int id)
         {
-            var stavebniDenik = DB_stavebniDentik.Select().Where(x => x.Zakazka.Id == zakazka.Id);
+            var stavebniDenik = DB_stavebniDenik.Select().Where(x => x.Zakazka.Id == id);
             if (stavebniDenik != null) return Ok(stavebniDenik);
 
             return NotFound();
@@ -26,10 +31,15 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("stavebniDenik")]
-        public IHttpActionResult Post(StavebniDenikModel model)
+        public IHttpActionResult Put([FromBody] StavebniDenikPostModel zaznam)
         {
-            var zaznam = DB_stavebniDentik.Insert(model);
-            if (zaznam != null) return Ok(zaznam);
+            var model = DB_stavebniDenik.Insert(new StavebniDenikModel {
+                Datum = zaznam.Datum,
+                Popis = zaznam.Popis,
+                Zakazka = DB_zakazka.Select(zaznam.ZakazkaId),
+                Zamestnanec = DB_uzivatel.Select(zaznam.ZamestnanecId)
+            });
+            if (model != null) return Ok(model);
 
             return BadRequest();
         }

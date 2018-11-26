@@ -12,9 +12,11 @@ namespace Databse
 
         protected override string SQL_SELECT_ID => "SELECT [Id], [Jmeno], [Prijmeni], [Telefon], [Login], [JeZakaznik], [JeZamestnanec] FROM [dbo].[Uzivatel] WHERE [Id] = @p_id;";
 
-        protected override string SQL_INSERT => "INSERT INTO [dbo].[Uzivatel] ([Jmeno], [Prijmeni], [Telefon], [Login], [Heslo], [JeZakaznik], [JeZamestnanec]) VALUES (@p_jmeno, @p_prijmeni, @p_telefon, @p_login, @p_heslo, @p_jeZakaznik, @p_jeZamestnanec);";
+        protected override string SQL_INSERT => "INSERT INTO [dbo].[Uzivatel] ([Jmeno], [Prijmeni], [Telefon], [Login], [Heslo], [JeZakaznik], [JeZamestnanec]) VALUES (@p_jmeno, @p_prijmeni, @p_telefon, @p_login, @p_heslo, @p_jeZakaznik, @p_jeZamestnanec); " +
+            "SELECT TOP 1 [Id], [Jmeno], [Prijmeni], [Telefon], [Login], [JeZakaznik], [JeZamestnanec] FROM [dbo].[Uzivatel] ORDER BY [Id] DESC;";
 
-        protected override string SQL_UPDATE => "UPDATE [dbo].[Uzivatel] SET [Jmeno] = @p_jmeno, [Prijmeni] = @p_prijmeni, [Telefon] = @p_telefon, [Login] = @p_login, [Heslo] = @p_heslo, [JeZakaznik] = @p_jeZakaznik, [JeZamestnanec] = @p_jeZamestnanec WHERE [Id] = @p_id;";
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Uzivatel] SET [Jmeno] = @p_jmeno, [Prijmeni] = @p_prijmeni, [Telefon] = @p_telefon, [Login] = @p_login, [Heslo] = @p_heslo, [JeZakaznik] = @p_jeZakaznik, [JeZamestnanec] = @p_jeZamestnanec WHERE [Id] = @p_id;" +
+            "SELECT TOP 1 [Id], [Jmeno], [Prijmeni], [Telefon], [Login], [JeZakaznik], [JeZamestnanec] FROM [dbo].[Uzivatel] ORDER BY [Id] DESC;";
 
         protected override string SQL_DELETE => "DELETE FROM[dbo].[Uzivatel] WHERE [Id] = @p_id;";
 
@@ -34,6 +36,12 @@ namespace Databse
 
         public override UzivatelModel Insert(UzivatelModel t)
         {
+            throw new NotSupportedException("User needs to have a password, use InsertWithPassword instead");
+        }
+
+        public UzivatelModel InsertWithPassword(UzivatelModel t, string heslo)
+        {
+
             var db = new Database();
             db.Connect();
 
@@ -42,13 +50,12 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_prijmeni", t.Prijmeni));
             command.Parameters.Add(new SqlParameter("@p_telefon", t.Telefon));
             command.Parameters.Add(new SqlParameter("@p_login", t.Login));
-            // command.Parameters.Add(new SqlParameter("@p_heslo", heslo));
+            command.Parameters.Add(new SqlParameter("@p_heslo", heslo));
             command.Parameters.Add(new SqlParameter("@p_jeZakaznik", t.JeZakaznik));
             command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestnanec));
 
-            var id = db.InsertAndReturnId(command);
-            t.Id = id;
-            return t;
+            var result = db.Select(command);
+            return Read(result).FirstOrDefault();
         }
 
         public override UzivatelModel Update(UzivatelModel t)
@@ -65,9 +72,8 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_jeZamestnanec", t.JeZamestnanec));
             command.Parameters.Add(new SqlParameter("@p_id", t.Id));
 
-            var id = db.InsertAndReturnId(command);
-            t.Id = id;
-            return t;
+            var result = db.Select(command);
+            return Read(result).FirstOrDefault();
         }
 
         protected override IEnumerable<UzivatelModel> Read(SqlDataReader reader)

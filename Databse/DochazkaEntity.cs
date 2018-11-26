@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using Models;
 
 namespace Databse
@@ -10,9 +12,11 @@ namespace Databse
 
         protected override string SQL_SELECT_ID => "SELECT [Id], [Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod], [Odchod] FROM[dbo].[Dochazka] WHERE [Id] = @p_id;";
 
-        protected override string SQL_INSERT => "INSERT INTO [dbo].[Dochazka]([Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod], [Odchod]) VALUES (@p_zakazkaId, @p_zamestnanecId, @p_datum, @p_prichod, @p_odchod);";
+        protected override string SQL_INSERT => "INSERT INTO [dbo].[Dochazka]([Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod], [Odchod]) VALUES (@p_zakazkaId, @p_zamestnanecId, @p_datum, @p_prichod, @p_odchod); " +
+            "SELECT TOP 1 [Id], [Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod], [Odchod] FROM [dbo].[Dochazka] ORDER BY [Id] DESC;";
 
-        protected override string SQL_UPDATE => "UPDATE [dbo].[Dochazka] SET [Zakazka-Id] = @p_zakazkaId, [Zamestnanec-Id] = @p_zamestnanecId, [Datum] = @p_datum, [Prichod] = @p_prichod, [Odchod] = @p_odchod) WHERE [Id] = @p_id;";
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Dochazka] SET [Zakazka-Id] = @p_zakazkaId, [Zamestnanec-Id] = @p_zamestnanecId, [Datum] = @p_datum, [Prichod] = @p_prichod, [Odchod] = @p_odchod) WHERE [Id] = @p_id; " +
+            "SELECT TOP 1 [Id], [Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod], [Odchod] FROM [dbo].[Dochazka] ORDER BY [Id] DESC;";
 
         protected override string SQL_DELETE => "DELETE FROM [dbo].[Dochazka] WHERE [Id] = @p_id;";
 
@@ -25,13 +29,12 @@ namespace Databse
 
             command.Parameters.Add(new SqlParameter("@p_zakazkaId", t.Zakazka.Id));
             command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.Zamestnanec.Id));
-            command.Parameters.Add(new SqlParameter("@p_datum", t.Datum));
+            command.Parameters.Add(new SqlParameter("@p_datum", Convert.ToDateTime(t.Datum).Ticks));
             command.Parameters.Add(new SqlParameter("@p_prichod", t.Prichod));
             command.Parameters.Add(new SqlParameter("@p_odchod", t.Odchod));
 
-            var id = db.InsertAndReturnId(command);
-            t.Id = id;
-            return t;
+            var result = db.Select(command);
+            return Read(result).FirstOrDefault();
         }
 
         public override DochazkaModel Update(DochazkaModel t)
@@ -43,14 +46,13 @@ namespace Databse
 
             command.Parameters.Add(new SqlParameter("@p_zakazkaId", t.Zakazka.Id));
             command.Parameters.Add(new SqlParameter("@p_zamestnanecId", t.Zamestnanec.Id));
-            command.Parameters.Add(new SqlParameter("@p_datum", t.Datum));
+            command.Parameters.Add(new SqlParameter("@p_datum", Convert.ToDateTime(t.Datum).Ticks));
             command.Parameters.Add(new SqlParameter("@p_prichod", t.Prichod));
             command.Parameters.Add(new SqlParameter("@p_odchod", t.Odchod));
             command.Parameters.Add(new SqlParameter("@p_id", t.Id));
 
-            var id = db.InsertAndReturnId(command);
-            t.Id = id;
-            return t;
+            var result = db.Select(command);
+            return Read(result).FirstOrDefault();
         }
 
         protected override IEnumerable<DochazkaModel> Read(SqlDataReader reader)
@@ -70,7 +72,7 @@ namespace Databse
 
                 var u = new UzivatelEntity().Select(reader.GetInt32(++i));
                 d.Zamestnanec = u;
-                d.Datum = reader.GetDateTime(++i);
+                d.Datum = new DateTime(reader.GetInt64(++i)).ToShortDateString();
                 d.Prichod = reader.GetTimeSpan(++i);
                 d.Odchod = reader.GetTimeSpan(++i);
 

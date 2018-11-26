@@ -8,4 +8,7 @@ Insert into [dbo].[Uzivatel]([Jmeno], [Prijmeni], [Telefon], [Login], [Heslo], [
 	values('Petr', 'Sramek', '+420987654321', 'petr', 'petr', 1, 1);
 
 Insert into [dbo].[Zakazka]([Nazev], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline]) 
-	values('Domeckek ze sirek', 2, 1, 1, 'Pod Skrtatkem 666, Spalena', CONVERT(datetime, '2019-11-24'))
+	values('Domecek ze sirek', (SELECT [Id] FROM [dbo].[Uzivatel] WHERE [Prijmeni] = 'Sramek'), (SELECT [Id] FROM [dbo].[Uzivatel] WHERE [Prijmeni] = 'Kubicek'), 1, 'Pod Skrtatkem 666, Spalena', 636784416000000000);
+
+Insert into [dbo].[StavebniDenik]([Zakazka-Id], [Uzivatel-Id], [Datum], [Popis])
+	values((SELECT [Id] FROM [dbo].[Zakazka] WHERE [Nazev] = 'Domecek ze sirek'), (SELECT [Id] FROM [dbo].[Uzivatel] WHERE [Prijmeni] = 'Kubicek'), 636784416000000000, 'POPIS ZAZNAMU');

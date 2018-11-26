@@ -7,7 +7,6 @@ namespace Models
     [KnownType(typeof(BaseModel))]
     [KnownType(typeof(UzivatelModel))]
     [KnownType(typeof(ZakazkaModel))]
-    [KnownType(typeof(DateTime))]
     [KnownType(typeof(TimeSpan))]
     public class DochazkaModel : BaseModel
     {
@@ -18,7 +17,7 @@ namespace Models
         public UzivatelModel Zamestnanec { get; set; }
 
         [DataMember]
-        public DateTime Datum { get; set; }
+        public string Datum { get; set; }
 
         [DataMember]
         public TimeSpan Prichod { get; set; }

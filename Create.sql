@@ -41,7 +41,7 @@ CREATE TABLE [dbo].[Zakazka]
 	[Zamestnanec-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Uzivatel] ([Id]),
 	[Stav-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Stav] ([Id]),
 	[Adresa] [nvarchar](100) NOT NULL,
-	[Deadline] [datetime] NULL
+	[Deadline] [bigint] NULL
 )
 
 CREATE TABLE [dbo].[Dochazka]
@@ -49,9 +49,9 @@ CREATE TABLE [dbo].[Dochazka]
 	[Id] [int] IDENTITY NOT NULL PRIMARY KEY,
 	[Zakazka-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Zakazka] ([Id]),
 	[Zamestnanec-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Uzivatel] ([Id]),
-	[Datum] [date] NOT NULL,
-	[Prichod] [datetime] NOT NULL,
-	[Odchod] [datetime] NOT NULL
+	[Datum] [bigint] NOT NULL,
+	[Prichod] [bigint] NOT NULL,
+	[Odchod] [bigint] NOT NULL
 )
 
 CREATE TABLE [dbo].[StavebniDenik]
@@ -59,7 +59,7 @@ CREATE TABLE [dbo].[StavebniDenik]
 	[Id] [int] IDENTITY NOT NULL PRIMARY KEY,
 	[Zakazka-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Zakazka] ([Id]),
 	[Uzivatel-Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[Uzivatel] ([Id]),
-	[Datum] [datetime] NOT NULL,
+	[Datum] [bigint] NOT NULL,
 	[Popis] [nvarchar](150) NULL
 )
 

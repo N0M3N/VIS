@@ -7,7 +7,6 @@ namespace Models
     [KnownType(typeof(BaseModel))]
     [KnownType(typeof(ZakazkaModel))]
     [KnownType(typeof(UzivatelModel))]
-    [KnownType(typeof(DateTime))]
     public class StavebniDenikModel : BaseModel
     {
         [DataMember]

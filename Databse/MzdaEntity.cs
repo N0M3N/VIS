@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using Models;
 
 namespace Databse
@@ -10,9 +11,11 @@ namespace Databse
 
         protected override string SQL_SELECT_ID => "SELECT [Id], [Uzivatel-Id], [Zakazka-Id], [Sazba] FROM [dbo].[Mzdy] WHERE [Id] = @p_id;";
 
-        protected override string SQL_INSERT => "INSERT INTO[dbo].[Mzdy]([Uzivatel-Id], [Zakazka-Id], [Sazba]) VALUES(@p_uzivatelId, @p_zakazkaId, @p_sazba);";
+        protected override string SQL_INSERT => "INSERT INTO[dbo].[Mzdy]([Uzivatel-Id], [Zakazka-Id], [Sazba]) VALUES(@p_uzivatelId, @p_zakazkaId, @p_sazba); " +
+            "SELECT TOP 1 * [Id], [Uzivatel-Id], [Zakazka-Id], [Sazba] FROM [dbo].[Mzdy];";
 
-        protected override string SQL_UPDATE => "UPDATE [dbo].[Mzdy] SET [Uzivatel-Id] = @p_uzivatelId, [Zakazka-Id] = @p_zakazkaId, [Sazba] = @p_sazba WHERE [Id] = @p_id;";
+        protected override string SQL_UPDATE => "UPDATE [dbo].[Mzdy] SET [Uzivatel-Id] = @p_uzivatelId, [Zakazka-Id] = @p_zakazkaId, [Sazba] = @p_sazba WHERE [Id] = @p_id; " +
+            "SELECT TOP 1 * [Id], [Uzivatel-Id], [Zakazka-Id], [Sazba] FROM [dbo].[Mzdy];";
 
         protected override string SQL_DELETE => "DELETE FROM [dbo].[Mzdy] WHERE [Id] = @p_id;";
 
@@ -26,9 +29,8 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_zakazkaId", t.Zakazka.Id));
             command.Parameters.Add(new SqlParameter("@p_sazba", t.Sazba));
 
-            var id = db.InsertAndReturnId(command);
-            t.Id = id;
-            return t;
+            var result = db.Select(command);
+            return Read(result).FirstOrDefault();
         }
 
         public override MzdaModel Update(MzdaModel t)
@@ -42,9 +44,8 @@ namespace Databse
             command.Parameters.Add(new SqlParameter("@p_sazba", t.Sazba));
             command.Parameters.Add(new SqlParameter("@p_id", t.Id));
 
-            var id = db.InsertAndReturnId(command);
-            t.Id = id;
-            return t;
+            var result = db.Select(command);
+            return Read(result).FirstOrDefault();
         }
 
         protected override IEnumerable<MzdaModel> Read(SqlDataReader reader)

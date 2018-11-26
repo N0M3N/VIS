@@ -28,7 +28,6 @@ namespace Databse
                 Connection.Open();
             }
             return true;
-
         }
 
         /// <summary>
@@ -94,20 +93,7 @@ namespace Databse
             }
             return rowNumber;
         }
-
-        public int InsertAndReturnId(SqlCommand command)
-        {
-            var id = 0;
-            try
-            {
-                id = (int) command.ExecuteScalar();
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
-            return id;
-        }
+        
 
         /// <summary>
         /// Create command
