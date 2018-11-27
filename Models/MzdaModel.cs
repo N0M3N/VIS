@@ -5,6 +5,7 @@ namespace Models
     [DataContract]
     [KnownType(typeof(BaseModel))]
     [KnownType(typeof(ZakazkaModel))]
+    [KnownType(typeof(UzivatelModel))]
     public class MzdaModel : BaseModel
     {
         [DataMember]

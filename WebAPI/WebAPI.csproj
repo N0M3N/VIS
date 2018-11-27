@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KalkulaceController.cs" />
     <Compile Include="Controllers\StavebniDenikController.cs" />
     <Compile Include="Controllers\UzivatelController.cs" />
     <Compile Include="Controllers\ZakazkaController.cs" />

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API_Models\KalkulaceGetModel.cs" />
     <Compile Include="API_Models\StavebniDenikPostModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="DochazkaModel.cs" />

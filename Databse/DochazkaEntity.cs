@@ -73,9 +73,8 @@ namespace Databse
                 var u = new UzivatelEntity().Select(reader.GetInt32(++i));
                 d.Zamestnanec = u;
                 d.Datum = new DateTime(reader.GetInt64(++i)).ToShortDateString();
-                d.Prichod = reader.GetTimeSpan(++i);
-                d.Odchod = reader.GetTimeSpan(++i);
-
+                d.Prichod = new DateTime(reader.GetInt64(++i)).TimeOfDay;
+                d.Odchod = new DateTime(reader.GetInt64(++i)).TimeOfDay;
 
                 dochazka.Add(d);
             }
