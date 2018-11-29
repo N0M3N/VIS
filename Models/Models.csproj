@@ -45,9 +45,8 @@
     <Compile Include="API_Models\KalkulaceGetModel.cs" />
     <Compile Include="API_Models\StavebniDenikPostModel.cs" />
     <Compile Include="BaseModel.cs" />
-    <Compile Include="DochazkaModel.cs" />
+    <Compile Include="KalkulaceModel.cs" />
     <Compile Include="LoginModel.cs" />
-    <Compile Include="MzdaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StavebniDenikModel.cs" />
     <Compile Include="StavModel.cs" />

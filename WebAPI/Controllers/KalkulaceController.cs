@@ -7,14 +7,12 @@ namespace WebAPI.Controllers
 {
     public class KalkulaceController : ApiController
     {
-        private readonly MzdaEntity mzdaEntity;
-        private readonly DochazkaEntity dochazkaEntity;
+        private readonly KalkulaceEntity kalkulaceEntity;
         private readonly ZakazkaEntity zakazkaEntity;
 
         public KalkulaceController()
         {
-            mzdaEntity = new MzdaEntity();
-            dochazkaEntity = new DochazkaEntity();
+            kalkulaceEntity = new KalkulaceEntity();
             zakazkaEntity = new ZakazkaEntity();
         }
 
@@ -22,13 +20,12 @@ namespace WebAPI.Controllers
         [Route("kalkulace/{id}")]
         public IHttpActionResult GetProZakazku([FromUri] int id)
         {
-            var zakazka = zakazkaEntity.Select(id);
-            if (zakazka == null) return NotFound();
+            var data = kalkulaceEntity.Kalkulace(id);
 
-            var mzdy = mzdaEntity.Select().Where(x => x.Zakazka == zakazka);
-            var dochazka = dochazkaEntity.Select().Where(x => x.Zakazka == zakazka);
-
-            var kalkulace = new KalkulaceGetModel(zakazka, dochazka, mzdy);
+            var kalkulace = new KalkulaceGetModel(
+                data
+                    .GroupBy(x => x.Zamestnanec)
+                    .Select(x => new MzdoveNakladyGetModel(x.Key, x.Select(y => new ZaznamDochazkyGetModel(y.Datum, (y.Odchod - y.Prichod).TotalHours)), x.First().Sazba)));
 
             return Ok(kalkulace);
         }

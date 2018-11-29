@@ -1,26 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Models.API_Models
 {
     public class KalkulaceGetModel
     {
-        public ZakazkaModel Zakazka { get; set; }
         public MzdoveNakladyGetModel[] MzdoveNaklady { get; set; } = new MzdoveNakladyGetModel[0];
         public double CelkoveMzdy { get; set; }
 
-        public KalkulaceGetModel(ZakazkaModel zakazka, IEnumerable<DochazkaModel> dochazka, IEnumerable<MzdaModel> mzdy)
+        public KalkulaceGetModel(IEnumerable<MzdoveNakladyGetModel> naklady)
         {
-            Zakazka = zakazka;
-            if (dochazka.Any() && mzdy.Any())
-            {
-                var firstDate = dochazka.Min(x => Convert.ToDateTime(x.Datum));
-                var lastDate = dochazka.Max(x => Convert.ToDateTime(x.Datum));
-                var dates = Enumerable.Range(0, 1 + lastDate.Subtract(firstDate).Days).Select(x => firstDate.AddDays(x));
-                MzdoveNaklady = mzdy.Select(x => new MzdoveNakladyGetModel(dates, dochazka.Where(y => y.Zamestnanec == x.Zamestnanec), x)).ToArray();
-                CelkoveMzdy = MzdoveNaklady.Sum(x => x.Mzda);
-            }
+            MzdoveNaklady = naklady.ToArray();
+
+            CelkoveMzdy = MzdoveNaklady.Sum(x => x.Mzda);
         }
     }
 
@@ -32,13 +24,12 @@ namespace Models.API_Models
         public double CelkemHodin { get; set; }
         public double Mzda { get; set; }
 
-        public MzdoveNakladyGetModel(IEnumerable<DateTime> dates, IEnumerable<DochazkaModel> dochazka, MzdaModel mzda)
+        public MzdoveNakladyGetModel(UzivatelModel zamestnanec, IEnumerable<ZaznamDochazkyGetModel> zaznamyDochazky, int sazba)
         {
-            Zamestnanec = mzda.Zamestnanec;
-            Dochazka = dates
-                .Select(y => new ZaznamDochazkyGetModel(y.ToShortDateString(),
-                (dochazka.FirstOrDefault(x => Convert.ToDateTime(x.Datum) == y).Odchod - dochazka.FirstOrDefault(x => Convert.ToDateTime(x.Datum) == y).Prichod).TotalHours)).ToArray();
-            Sazba = mzda.Sazba;
+            Zamestnanec = zamestnanec;
+            Dochazka = zaznamyDochazky.ToArray();
+            Sazba = sazba;
+
             CelkemHodin = Dochazka.Sum(x => x.OdpracovanychHodin);
             Mzda = CelkemHodin * Sazba;
         }
@@ -49,10 +40,10 @@ namespace Models.API_Models
         public double OdpracovanychHodin { get; set; }
         public string Datum { get; set; }
 
-        public ZaznamDochazkyGetModel(string datum, double hodin)
+        public ZaznamDochazkyGetModel(string datum, double odpracovanychHodin)
         {
             Datum = datum;
-            OdpracovanychHodin = hodin;
+            OdpracovanychHodin = odpracovanychHodin;
         }
     }
 }

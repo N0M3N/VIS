@@ -43,13 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
-    <Compile Include="DochazkaEntity.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="ICRUD.cs" />
-    <Compile Include="MzdaEntity.cs" />
+    <Compile Include="KalkulaceEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StavebniDenikEntity.cs" />
-    <Compile Include="StavEntity.cs" />
     <Compile Include="UzivatelEntity.cs" />
     <Compile Include="ZakazkaEntity.cs" />
   </ItemGroup>

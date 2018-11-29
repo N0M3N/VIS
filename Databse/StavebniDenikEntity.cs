@@ -1,16 +1,46 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using Models;
 
 namespace Databse
 {
     public class StavebniDenikEntity : Entity<StavebniDenikModel>
     {
-        protected override string SQL_SELECT => "SELECT [Id], [Zakazka-Id], [Uzivatel-Id], [Datum], [Popis] FROM [dbo].[StavebniDenik];";
+        protected override string SQL_SELECT => @"
+            SELECT 
+            SD.[Id], SD.[Datum], SD.[Popis],
+                Z.[Id], Z.[Nazev], Z.[Adresa], Z.[Deadline],
+                    S.[Nazev],
+		            Zak.[Id], Zak.[Jmeno], Zak.[Prijmeni], Zak.[Telefon], Zak.[Login], Zak.[JeZakaznik], Zak.[JeZamestnanec],
+		            Zam.[Id], Zam.[Jmeno], Zam.[Prijmeni], Zam.[Telefon], Zam.[Login], Zam.[JeZakaznik], Zam.[JeZamestnanec],
+                U.[Id], U.[Jmeno], U.[Prijmeni], U.[Telefon], U.[Login], U.[JeZakaznik], U.[JeZamestnanec]
+            FROM [dbo].[StavebniDenik] SD
 
-        protected override string SQL_SELECT_ID => "SELECT [Id], [Zakazka-Id], [Uzivatel-Id], [Datum], [Popis] FROM [dbo].[StavebniDenik] WHERE [Id] = @p_id;";
+            JOIN[dbo].[Zakazka] Z ON SD.[Zakazka-Id] = Z.[Id]
+            JOIN [dbo].[Stav] S ON Z.[Stav-Id] = S.[Id]
+            JOIN[dbo].[Uzivatel] Zam ON Z.[Zamestnanec-Id] = Zam.[Id]
+            JOIN[dbo].[Uzivatel] Zak ON Z.[Zakaznik-Id] = Zak.[Id]
+            JOIN[dbo].[Uzivatel] U ON SD.[Uzivatel-Id] = U.[Id];";
+
+        protected override string SQL_SELECT_ID => @"
+            SELECT 
+            SD.[Id], SD.[Datum], SD.[Popis],
+                Z.[Id], Z.[Nazev], Z.[Adresa], Z.[Deadline],
+                    S.[Nazev],
+		            Zak.[Id], Zak.[Jmeno], Zak.[Prijmeni], Zak.[Telefon], Zak.[Login], Zak.[JeZakaznik], Zak.[JeZamestnanec],
+		            Zam.[Id], Zam.[Jmeno], Zam.[Prijmeni], Zam.[Telefon], Zam.[Login], Zam.[JeZakaznik], Zam.[JeZamestnanec],
+                U.[Id], U.[Jmeno], U.[Prijmeni], U.[Telefon], U.[Login], U.[JeZakaznik], U.[JeZamestnanec]
+            FROM [dbo].[StavebniDenik] SD
+
+            JOIN[dbo].[Zakazka] Z ON SD.[Zakazka-Id] = Z.[Id]
+            JOIN [dbo].[Stav] S ON Z.[Stav-Id] = S.[Id]
+            JOIN[dbo].[Uzivatel] Zam ON Z.[Zamestnanec-Id] = Zam.[Id]
+            JOIN[dbo].[Uzivatel] Zak ON Z.[Zakaznik-Id] = Zak.[Id]
+            JOIN[dbo].[Uzivatel] U ON SD.[Uzivatel-Id] = U.[Id]
+
+            WHERE SD.[Id] = @p_id;";
 
         protected override string SQL_INSERT => "INSERT INTO [dbo].[StavebniDenik]([Zakazka-Id], [Uzivatel-Id], [Datum], [Popis]) VALUES (@p_zakazkaId, @p_uzivatelId, @p_datum, @p_popis); " +
             "SELECT TOP 1 [Id], [Zakazka-Id], [Uzivatel-Id], [Datum], [Popis] FROM [dbo].[StavebniDenik] ORDER BY [Id] DESC;";
@@ -53,30 +83,61 @@ namespace Databse
             return Read(result).FirstOrDefault();
         }
 
-        public override IEnumerable<StavebniDenikModel> Read(SqlDataReader reader)
+        protected override IEnumerable<StavebniDenikModel> Read(SqlDataReader reader)
         {
-            var mzdy = new List<StavebniDenikModel>();
+            var denik = new List<StavebniDenikModel>();
+
             while (reader.Read())
             {
                 var i = -1;
                 var m = new StavebniDenikModel
                 {
                     Id = reader.GetInt32(++i),
+                    Datum = new DateTime(reader.GetInt64(++i)).ToShortDateString(),
+                    Popis = reader.GetString(++i),
+                    Zakazka = new ZakazkaModel
+                    {
+                        Id = reader.GetInt32(++i),
+                        Nazev = reader.GetString(++i),
+                        Adresa = reader.GetString(++i),
+                        Deadline = new DateTime(reader.GetInt64(++i)).ToShortDateString(),
+                        Stav = reader.GetString(++i),
+                        Zakaznik = new UzivatelModel
+                        {
+                            Id = reader.GetInt32(++i),
+                            Jmeno = reader.GetString(++i),
+                            Prijmeni = reader.GetString(++i),
+                            Telefon = reader.GetString(++i),
+                            Login = reader.GetString(++i),
+                            JeZakaznik = reader.GetBoolean(++i),
+                            JeZamestnanec = reader.GetBoolean(++i)
+                        },
+                        ZodpovednyZamestnanec = new UzivatelModel
+                        {
+                            Id = reader.GetInt32(++i),
+                            Jmeno = reader.GetString(++i),
+                            Prijmeni = reader.GetString(++i),
+                            Telefon = reader.GetString(++i),
+                            Login = reader.GetString(++i),
+                            JeZakaznik = reader.GetBoolean(++i),
+                            JeZamestnanec = reader.GetBoolean(++i)
+                        }
+                    },
+                    Zamestnanec = new UzivatelModel
+                    {
+                        Id = reader.GetInt32(++i),
+                        Jmeno = reader.GetString(++i),
+                        Prijmeni = reader.GetString(++i),
+                        Telefon = reader.GetString(++i),
+                        Login = reader.GetString(++i),
+                        JeZakaznik = reader.GetBoolean(++i),
+                        JeZamestnanec = reader.GetBoolean(++i)
+                    }
                 };
-                var z = new ZakazkaEntity().Select(reader.GetInt32(++i));
-                m.Zakazka = z;
-
-
-                var u = new UzivatelEntity().Select(reader.GetInt32(++i));
-                m.Zamestnanec = u;
-
-                m.Datum = new DateTime(reader.GetInt64(++i)).ToShortDateString();
-                m.Popis = reader.GetString(++i);
-
-                mzdy.Add(m);
+                denik.Add(m);
             }
 
-            return mzdy;
+            return denik;
         }
     }
 }

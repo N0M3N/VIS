@@ -42,4 +42,4 @@ Insert into [dbo].[Dochazka]([Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod],
 Insert into [dbo].[Dochazka]([Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod], [Odchod])
 	values((SELECT [Id] FROM [dbo].[Zakazka] WHERE [Nazev] = 'Drevostavba v centru'), (SELECT [Id] FROM [dbo].[Uzivatel] WHERE [Prijmeni] = 'Kubicek'), 636785280000000000, 636785604000000000, 636786072000000000);
 Insert into [dbo].[Dochazka]([Zakazka-Id], [Zamestnanec-Id], [Datum], [Prichod], [Odchod])
-	values((SELECT [Id] FROM [dbo].[Zakazka] WHERE [Nazev] = 'Drevostavba v centru'), (SELECT [Id] FROM [dbo].[Uzivatel] WHERE [Prijmeni] = 'Sramek'), 636784416000000000, 636784650000000000, 636785067000000000);
+	values((SELECT [Id] FROM [dbo].[Zakazka] WHERE [Nazev] = 'Oprava historicke budovy'), (SELECT [Id] FROM [dbo].[Uzivatel] WHERE [Prijmeni] = 'Sramek'), 636784416000000000, 636784650000000000, 636785067000000000);

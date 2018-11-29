@@ -41,7 +41,6 @@ namespace Databse
 
         public UzivatelModel InsertWithPassword(UzivatelModel t, string heslo)
         {
-
             var db = new Database();
             db.Connect();
 
@@ -76,9 +75,10 @@ namespace Databse
             return Read(result).FirstOrDefault();
         }
 
-        public override IEnumerable<UzivatelModel> Read(SqlDataReader reader)
+        protected override IEnumerable<UzivatelModel> Read(SqlDataReader reader)
         {
             var uzivatele = new List<UzivatelModel>();
+
             while (reader.Read())
             {
                 var i = -1;
@@ -89,11 +89,9 @@ namespace Databse
                     Prijmeni = reader.GetString(++i),
                     Telefon = reader.GetString(++i),
                     Login = reader.GetString(++i),
-                    //Heslo = reader.GetString(++i),
                     JeZakaznik = reader.GetBoolean(++i),
                     JeZamestnanec = reader.GetBoolean(++i),
                 };
-                
                 uzivatele.Add(u);
             }
             return uzivatele;

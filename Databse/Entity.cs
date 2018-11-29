@@ -51,6 +51,6 @@ namespace Databse
             return db.ExecuteNonQuery(cmd) == 1;
         }
 
-        public abstract IEnumerable<T> Read(SqlDataReader reader);
+        protected abstract IEnumerable<T> Read(SqlDataReader reader);
     }
 }
