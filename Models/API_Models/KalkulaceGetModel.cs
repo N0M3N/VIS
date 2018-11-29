@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Models.API_Models
@@ -24,10 +25,20 @@ namespace Models.API_Models
         public double CelkemHodin { get; set; }
         public double Mzda { get; set; }
 
-        public MzdoveNakladyGetModel(UzivatelModel zamestnanec, IEnumerable<ZaznamDochazkyGetModel> zaznamyDochazky, int sazba)
+        public MzdoveNakladyGetModel(DateTime firstDate, DateTime lastDate, UzivatelModel zamestnanec, List<ZaznamDochazkyGetModel> zaznamyDochazky, int sazba)
         {
             Zamestnanec = zamestnanec;
-            Dochazka = zaznamyDochazky.ToArray();
+
+            for (DateTime date = firstDate; date <= lastDate; date = date.AddDays(1))
+            {
+                if(zaznamyDochazky.All(x => x.Datum != date.ToShortDateString()))
+                {
+                    zaznamyDochazky.Add(new ZaznamDochazkyGetModel(date.ToShortDateString(), 0));
+                }
+            }
+
+            Dochazka = zaznamyDochazky.OrderBy(x => DateTime.Parse(x.Datum)).ToArray();
+
             Sazba = sazba;
 
             CelkemHodin = Dochazka.Sum(x => x.OdpracovanychHodin);
@@ -43,7 +54,7 @@ namespace Models.API_Models
         public ZaznamDochazkyGetModel(string datum, double odpracovanychHodin)
         {
             Datum = datum;
-            OdpracovanychHodin = odpracovanychHodin;
+            OdpracovanychHodin = Math.Floor(odpracovanychHodin);
         }
     }
 }
