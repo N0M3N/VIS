@@ -56,7 +56,7 @@ namespace Databse
             return Read(result).FirstOrDefault();
         }
 
-        protected override IEnumerable<ZakazkaModel> Read(SqlDataReader reader)
+        public override IEnumerable<ZakazkaModel> Read(SqlDataReader reader)
         {
             var zakazky = new List<ZakazkaModel>();
             while (reader.Read())

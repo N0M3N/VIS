@@ -28,7 +28,7 @@ namespace Databse
             throw new System.NotSupportedException();
         }
 
-        protected override IEnumerable<StavModel> Read(SqlDataReader reader)
+        public override IEnumerable<StavModel> Read(SqlDataReader reader)
         {
             var stavy = new List<StavModel>();
             while (reader.Read())

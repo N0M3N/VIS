@@ -55,7 +55,7 @@ namespace Databse
             return Read(result).FirstOrDefault();
         }
 
-        protected override IEnumerable<DochazkaModel> Read(SqlDataReader reader)
+        public override IEnumerable<DochazkaModel> Read(SqlDataReader reader)
         {
             // TO DO 
             var dochazka = new List<DochazkaModel>();

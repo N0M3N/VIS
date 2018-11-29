@@ -53,7 +53,7 @@ namespace Databse
             return Read(result).FirstOrDefault();
         }
 
-        protected override IEnumerable<StavebniDenikModel> Read(SqlDataReader reader)
+        public override IEnumerable<StavebniDenikModel> Read(SqlDataReader reader)
         {
             var mzdy = new List<StavebniDenikModel>();
             while (reader.Read())

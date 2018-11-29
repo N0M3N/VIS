@@ -76,7 +76,7 @@ namespace Databse
             return Read(result).FirstOrDefault();
         }
 
-        protected override IEnumerable<UzivatelModel> Read(SqlDataReader reader)
+        public override IEnumerable<UzivatelModel> Read(SqlDataReader reader)
         {
             var uzivatele = new List<UzivatelModel>();
             while (reader.Read())

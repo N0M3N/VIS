@@ -48,7 +48,7 @@ namespace Databse
             return Read(result).FirstOrDefault();
         }
 
-        protected override IEnumerable<MzdaModel> Read(SqlDataReader reader)
+        public override IEnumerable<MzdaModel> Read(SqlDataReader reader)
         {
             var mzdy = new List<MzdaModel>();
             while (reader.Read())
