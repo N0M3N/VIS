@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Models.API_Models
 {
     public class KalkulaceGetModel
     {
         public MzdoveNakladyGetModel[] MzdoveNaklady { get; set; } = new MzdoveNakladyGetModel[0];
-        public double CelkoveMzdy { get; set; }
+        public double CelkoveMzdy { get; set; } = 0;
 
-        public KalkulaceGetModel(IEnumerable<MzdoveNakladyGetModel> naklady)
+        public void Recalculate()
         {
-            MzdoveNaklady = naklady.ToArray();
-
-            CelkoveMzdy = MzdoveNaklady.Sum(x => x.Mzda);
+            foreach (var naklady in MzdoveNaklady)
+            {
+                naklady.Recalculate();
+                CelkoveMzdy += naklady.Mzda;
+            }
         }
     }
 
@@ -25,22 +25,8 @@ namespace Models.API_Models
         public double CelkemHodin { get; set; }
         public double Mzda { get; set; }
 
-        public MzdoveNakladyGetModel(DateTime firstDate, DateTime lastDate, UzivatelModel zamestnanec, List<ZaznamDochazkyGetModel> zaznamyDochazky, int sazba)
+        public void Recalculate()
         {
-            Zamestnanec = zamestnanec;
-
-            for (DateTime date = firstDate; date <= lastDate; date = date.AddDays(1))
-            {
-                if(zaznamyDochazky.All(x => x.Datum != date.ToShortDateString()))
-                {
-                    zaznamyDochazky.Add(new ZaznamDochazkyGetModel(date.ToShortDateString(), 0));
-                }
-            }
-
-            Dochazka = zaznamyDochazky.OrderBy(x => DateTime.Parse(x.Datum)).ToArray();
-
-            Sazba = sazba;
-
             CelkemHodin = Dochazka.Sum(x => x.OdpracovanychHodin);
             Mzda = CelkemHodin * Sazba;
         }
@@ -50,11 +36,5 @@ namespace Models.API_Models
     {
         public double OdpracovanychHodin { get; set; }
         public string Datum { get; set; }
-
-        public ZaznamDochazkyGetModel(string datum, double odpracovanychHodin)
-        {
-            Datum = datum;
-            OdpracovanychHodin = Math.Floor(odpracovanychHodin);
-        }
     }
 }
