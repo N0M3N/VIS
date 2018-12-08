@@ -110,6 +110,7 @@
     <Compile Include="Connector\IUzivatelConnector.cs" />
     <Compile Include="Connector\IZakazkyConnector.cs" />
     <Compile Include="Connector\UzivatelConnector.cs" />
+    <Compile Include="CurrentDataSingleton.cs" />
     <Compile Include="Exceptions\ConnectionFailedException.cs" />
     <Compile Include="Connector\ZakazkyConnector.cs" />
     <Compile Include="Pages\ListZakazek\ListZakazekView.xaml.cs">
@@ -120,7 +121,6 @@
     <Compile Include="Utils\ReactiveCommandHelper.cs" />
     <Compile Include="Utils\ResolveExtension.cs" />
     <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="Messages\NavigateWithZakazkaMessage.cs" />
     <Compile Include="Pages\DetailZakazky\DetailZakazkyView.xaml.cs">
       <DependentUpon>DetailZakazkyView.xaml</DependentUpon>
     </Compile>

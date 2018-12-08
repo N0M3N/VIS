@@ -1,5 +1,4 @@
 ﻿using Desktop.Attributes;
-using Desktop.Messages;
 using Models;
 using Reactive.Bindings;
 using System;
@@ -11,7 +10,7 @@ namespace Desktop.Pages.DetailZakazky
     {
         public ReactiveProperty<ZakazkaModel> VybranaZakazka { get; }
 
-        public DetailZakazkyViewModel(NavigateWithZakazkaMessage message)
+        public DetailZakazkyViewModel(CurrentDataSingleton message)
         {
             VybranaZakazka = new ReactiveProperty<ZakazkaModel>(message.Zakazka);
         }

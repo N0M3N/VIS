@@ -14,17 +14,17 @@ namespace Desktop.Pages.Login
     {
         private readonly INavigationService navigation;
         private readonly IUzivatelConnector uzivatelConnector;
-        private readonly MainWindowViewModel mainWIndow;
+        private readonly MainWindowViewModel mainWindow;
 
         public ReactiveProperty<string> Login { get; }
         public ReactiveProperty<string> Password { get; }
         public ReactiveCommand LogInCommand { get; }
 
-        public LoginViewModel(INavigationService navigation, IUzivatelConnector uzivatelConnector, MainWindowViewModel mainWIndow)
+        public LoginViewModel(INavigationService navigation, IUzivatelConnector uzivatelConnector, MainWindowViewModel mainWindow)
         {
             this.navigation = navigation;
             this.uzivatelConnector = uzivatelConnector;
-            this.mainWIndow = mainWIndow;
+            this.mainWindow = mainWindow;
             Login = new ReactiveProperty<string>();
             Password = new ReactiveProperty<string>();
             LogInCommand = ReactiveCommandHelper.Create(LoginAction);
@@ -35,7 +35,7 @@ namespace Desktop.Pages.Login
             var user = await uzivatelConnector.Login(new LoginModel { Login = Login.Value, Password = Password.Value });
             if(user != null)
             {
-                mainWIndow.CurrentUser.Value = user;
+                mainWindow.CurrentData.Uzivatel.Value = user;
                 navigation.Navigate(new HomeView());
             }
         }

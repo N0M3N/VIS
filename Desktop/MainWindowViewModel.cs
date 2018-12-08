@@ -1,9 +1,7 @@
 ﻿using Desktop.Attributes;
 using Desktop.Utils;
-using Desktop.Messages;
 using Desktop.Pages.ListZakazek;
 using Desktop.Services;
-using Models;
 using Reactive.Bindings;
 using System;
 
@@ -13,32 +11,30 @@ namespace Desktop
     internal class MainWindowViewModel : IDisposable
     {
         private readonly INavigationService navigation;
-        private readonly NavigateWithZakazkaMessage message;
 
-        public ReactiveProperty<UzivatelModel> CurrentUser { get; }
+        public CurrentDataSingleton CurrentData { get; }
         public ReactiveProperty<MenuSelectionEnum> MenuSelection { get; }
         public ReactiveCommand<Type> NavigationCommand { get; }
 
-        public MainWindowViewModel(INavigationService navigation, NavigateWithZakazkaMessage message)
+        public MainWindowViewModel(INavigationService navigation, CurrentDataSingleton currentData)
         {
-            CurrentUser = new ReactiveProperty<UzivatelModel>();
+            CurrentData = currentData;
             MenuSelection = new ReactiveProperty<MenuSelectionEnum>(MenuSelectionEnum.None);
             NavigationCommand = ReactiveCommandHelper.Create<Type>(Navigate);
 
             this.navigation = navigation;
-            this.message = message;
         }
 
         private void Navigate(Type type)
         {
             var obj = Activator.CreateInstance(type);
-            message.PageType = type;
+            CurrentData.PageType = type;
             navigation.Navigate(new ListZakazekView());
         }
 
         public void Dispose()
         {
-            CurrentUser.Dispose();
+            CurrentData.Dispose();
             MenuSelection.Dispose();
             NavigationCommand.Dispose();
         }

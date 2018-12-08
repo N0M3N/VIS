@@ -3,13 +3,11 @@ using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
 using Desktop.Attributes;
 using Desktop.Connector;
-using Desktop.Messages;
 using Desktop.Services;
 using System;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace Desktop
 {
@@ -25,7 +23,6 @@ namespace Desktop
             var builder = new ContainerBuilder();
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
-
 
             RegisterServices(builder);
             RegisterViewModels(builder);
@@ -44,18 +41,18 @@ namespace Desktop
 
         private void RegisterConnectors(ContainerBuilder builder)
         {
-            builder.RegisterType<ZakazkyConnector>()
-                .As<IZakazkyConnector>()
-                .InstancePerDependency();
-            builder.RegisterType<UzivatelConnector>()
-                .As<IUzivatelConnector>()
-                .InstancePerDependency();
-        }
+                builder.RegisterType<ZakazkyConnector>()
+                    .As<IZakazkyConnector>()
+                    .InstancePerDependency();
+                builder.RegisterType<UzivatelConnector>()
+                    .As<IUzivatelConnector>()
+                    .InstancePerDependency();
+            }
 
         private void RegisterMessages(ContainerBuilder builder)
         {
-            builder.RegisterType<NavigateWithZakazkaMessage>()
-                .As<NavigateWithZakazkaMessage>()
+            builder.RegisterType<CurrentDataSingleton>()
+                .As<CurrentDataSingleton>()
                 .SingleInstance();
         }
 

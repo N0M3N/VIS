@@ -18,13 +18,13 @@
                 <DockPanel.Style>
                     <Style TargetType="DockPanel">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding CurrentUser.Value}" Value="{x:Null}">
+                            <DataTrigger Binding="{Binding CurrentData.Value.Uzivatel.Value, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </DockPanel.Style>
-                <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}">
+                <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}" Content="Detail Zakazky">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
                             <Style.Triggers>
@@ -35,7 +35,6 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                    Detail zakazky
                 </Button>
                 <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}">
                     <Button.Style>

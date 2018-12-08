@@ -1,13 +1,10 @@
-﻿using CommonServiceLocator;
-using Desktop.Attributes;
+﻿using Desktop.Attributes;
 using Desktop.Connector;
 using Desktop.Utils;
-using Desktop.Messages;
 using Desktop.Services;
 using Models;
 using Reactive.Bindings;
 using System;
-using System.Reactive.Subjects;
 using System.Windows.Controls;
 
 namespace Desktop.Pages.ListZakazek
@@ -17,14 +14,14 @@ namespace Desktop.Pages.ListZakazek
     {
         private readonly INavigationService navigation;
         private readonly IZakazkyConnector zakazkyConnector;
-        private readonly NavigateWithZakazkaMessage message;
+        private readonly MainWindowViewModel mainWindow;
 
         public ReactiveProperty<bool> CanExecute { get; }
         public ReactiveCollection<ZakazkaModel> Zakazky { get; }
         public ReactiveProperty<ZakazkaModel> Selected { get; }
         public ReactiveCommand<ZakazkaModel> ContinueCommand { get; }
 
-        public ListZakazekViewModel(INavigationService navigation, IZakazkyConnector zakazkyConnector, NavigateWithZakazkaMessage message)
+        public ListZakazekViewModel(INavigationService navigation, IZakazkyConnector zakazkyConnector, MainWindowViewModel mainWindow)
         {
             Zakazky = new ReactiveCollection<ZakazkaModel>();
             CanExecute = new ReactiveProperty<bool>();
@@ -34,20 +31,20 @@ namespace Desktop.Pages.ListZakazek
 
             this.navigation = navigation;
             this.zakazkyConnector = zakazkyConnector;
-            this.message = message;
+            this.mainWindow = mainWindow;
 
             Populate();
         }
 
         private async void Populate()
         {
-            Zakazky.AddRangeOnScheduler(await zakazkyConnector.GetAllByUserAsync(ServiceLocator.Current.GetInstance<MainWindowViewModel>().CurrentUser.Value));
+            Zakazky.AddRangeOnScheduler(await zakazkyConnector.GetAllByUserAsync(mainWindow.CurrentData.Uzivatel.Value));
         }
 
-        private void Navigate(ZakazkaModel obj)
+        private void Navigate(ZakazkaModel zakazka)
         {
-            message.Zakazka = obj;
-            navigation.Navigate((Page) Activator.CreateInstance(message.PageType));
+            mainWindow.CurrentData.Zakazka = zakazka;
+            navigation.Navigate((Page) Activator.CreateInstance(mainWindow.CurrentData.PageType));
         }
 
         public void Dispose()
