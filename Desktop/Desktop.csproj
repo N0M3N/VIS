@@ -114,11 +114,21 @@
     <Compile Include="CurrentDataSingleton.cs" />
     <Compile Include="Exceptions\ConnectionFailedException.cs" />
     <Compile Include="Connector\ZakazkyConnector.cs" />
+    <Compile Include="Pages\Kalkulace\KalkulaceView.xaml.cs">
+      <DependentUpon>KalkulaceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Kalkulace\KalkulaceViewModel.cs" />
     <Compile Include="Pages\ListZakazek\ListZakazekView.xaml.cs">
       <DependentUpon>ListZakazekView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ListZakazek\ListZakazekViewModel.cs" />
     <Compile Include="Converters\MultiBindingIntoArrayConverter.cs" />
+    <Compile Include="Pages\StavebniDenik\StavebniDenikView.xaml.cs">
+      <DependentUpon>StavebniDenikView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StavebniDenik\StavebniDenikViewModel.cs" />
+    <Compile Include="Services\IFileExportService.cs" />
+    <Compile Include="Services\XmlExportService.cs" />
     <Compile Include="Utils\ReactiveCommandHelper.cs" />
     <Compile Include="Utils\ResolveExtension.cs" />
     <Compile Include="MainWindowViewModel.cs" />
@@ -156,11 +166,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Kalkulace\KalkulaceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ListZakazek\ListZakazekView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Login\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StavebniDenik\StavebniDenikView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

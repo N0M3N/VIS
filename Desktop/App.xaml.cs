@@ -70,6 +70,10 @@ namespace Desktop
                 .As(typeof(IObservable<>))
                 .As(typeof(IObserver<>))
                 .SingleInstance();
+
+            builder.RegisterType<XmlExportService>()
+                .As<IFileExportService>()
+                .InstancePerDependency();
         }
 
         private void RegisterViewModels(ContainerBuilder builder)

@@ -1,0 +1,16 @@
+﻿<Page x:Class="Desktop.Pages.Kalkulace.KalkulaceView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Desktop.Pages.Kalkulace"
+      xmlns:utils="clr-namespace:Desktop.Utils"
+      DataContext="{utils:Resolve local:KalkulaceViewModel}"
+      d:DataContext="{d:DesignInstance Type=local:KalkulaceViewModel, IsDesignTimeCreatable=False}"
+      mc:Ignorable="d">
+
+    <Grid>
+        <!-- TODO: Kalkulace -->
+        <Button Command="{Binding ExportToXmlCommand}" Content="Export to XML" />
+    </Grid>
+</Page>

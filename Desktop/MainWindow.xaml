@@ -7,6 +7,8 @@
         xmlns:utils="clr-namespace:Desktop.Utils"
         xmlns:local="clr-namespace:Desktop"
         xmlns:detailzakazky="clr-namespace:Desktop.Pages.DetailZakazky"
+        xmlns:stavebniDenik="clr-namespace:Desktop.Pages.StavebniDenik"
+        xmlns:kalkulace="clr-namespace:Desktop.Pages.Kalkulace"
         DataContext="{utils:Resolve local:MainWindowViewModel}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Title="VIS - Stavebni denik a dochazka">
@@ -37,7 +39,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}">
+                <Button Content="Stavebni Denik" Command="{Binding NavigationCommand}" CommandParameter="{x:Type stavebniDenik:StavebniDenikView}">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
                             <Style.Triggers>
@@ -48,9 +50,8 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                    Stavebni denik
                 </Button>
-                <Button Command="{Binding NavigationCommand}" CommandParameter="{x:Type detailzakazky:DetailZakazkyView}">
+                <Button Content="Kalkulace Mezd" Command="{Binding NavigationCommand}" CommandParameter="{x:Type kalkulace:KalkulaceView}">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
                             <Style.Triggers>
@@ -61,7 +62,6 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                    Kalkulace mezd
                 </Button>
             </DockPanel>
         </DockPanel>
