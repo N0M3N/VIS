@@ -24,5 +24,10 @@ namespace Desktop.Pages.DetailZakazky
         {
             InitializeComponent();
         }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

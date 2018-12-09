@@ -27,7 +27,6 @@ namespace Desktop
 
         private void Navigate(Type type)
         {
-            var obj = Activator.CreateInstance(type);
             CurrentData.PageType = type;
             navigation.Navigate(new ListZakazekView());
         }

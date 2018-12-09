@@ -14,14 +14,15 @@ namespace Desktop.Pages.ListZakazek
     {
         private readonly INavigationService navigation;
         private readonly IZakazkyConnector zakazkyConnector;
-        private readonly MainWindowViewModel mainWindow;
+        private readonly CurrentDataSingleton currentData;
 
         public ReactiveProperty<bool> CanExecute { get; }
+
         public ReactiveCollection<ZakazkaModel> Zakazky { get; }
         public ReactiveProperty<ZakazkaModel> Selected { get; }
         public ReactiveCommand<ZakazkaModel> ContinueCommand { get; }
 
-        public ListZakazekViewModel(INavigationService navigation, IZakazkyConnector zakazkyConnector, MainWindowViewModel mainWindow)
+        public ListZakazekViewModel(INavigationService navigation, IZakazkyConnector zakazkyConnector, CurrentDataSingleton currentData)
         {
             Zakazky = new ReactiveCollection<ZakazkaModel>();
             CanExecute = new ReactiveProperty<bool>();
@@ -31,20 +32,20 @@ namespace Desktop.Pages.ListZakazek
 
             this.navigation = navigation;
             this.zakazkyConnector = zakazkyConnector;
-            this.mainWindow = mainWindow;
+            this.currentData = currentData;
 
             Populate();
         }
 
         private async void Populate()
         {
-            Zakazky.AddRangeOnScheduler(await zakazkyConnector.GetAllByUserAsync(mainWindow.CurrentData.Uzivatel.Value));
+            Zakazky.AddRangeOnScheduler(await zakazkyConnector.GetAllByUserAsync(currentData.Uzivatel.Value));
         }
 
         private void Navigate(ZakazkaModel zakazka)
         {
-            mainWindow.CurrentData.Zakazka = zakazka;
-            navigation.Navigate((Page) Activator.CreateInstance(mainWindow.CurrentData.PageType));
+            currentData.Zakazka = zakazka;
+            navigation.Navigate((Page) Activator.CreateInstance(currentData.PageType));
         }
 
         public void Dispose()

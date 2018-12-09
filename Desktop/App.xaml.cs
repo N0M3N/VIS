@@ -34,20 +34,23 @@ namespace Desktop
             ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container));
             base.OnStartup(e);
         }
-
+        
         private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
         {
         }
 
         private void RegisterConnectors(ContainerBuilder builder)
         {
-                builder.RegisterType<ZakazkyConnector>()
-                    .As<IZakazkyConnector>()
-                    .InstancePerDependency();
-                builder.RegisterType<UzivatelConnector>()
-                    .As<IUzivatelConnector>()
-                    .InstancePerDependency();
-            }
+            builder.RegisterType<ZakazkyConnector>()
+                .As<IZakazkyConnector>()
+                .InstancePerDependency();
+            builder.RegisterType<UzivatelConnector>()
+                .As<IUzivatelConnector>()
+                .InstancePerDependency();
+            builder.RegisterType<StavebniDenikConnector>()
+                .As<IStavebniDenikConnector>()
+                .InstancePerDependency();
+        }
 
         private void RegisterMessages(ContainerBuilder builder)
         {
