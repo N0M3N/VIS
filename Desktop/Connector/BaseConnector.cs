@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
@@ -31,49 +30,34 @@ namespace Desktop.Connector
 
         protected async Task<TResponse> TryHttpPostAs<TContent, TResponse>(string uri, TContent content)
         {
-            try
+            using (var client = new HttpClient())
             {
-                using (var client = new HttpClient())
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                var jsonContent = new StringContent(ToJsonFrom(content), Encoding.UTF8, "application/json");
+
+                var result = await client.PostAsync(uri, jsonContent);
+                if (result.IsSuccessStatusCode)
                 {
-                    client.DefaultRequestHeaders.Add("Accept", "application/json");
-                    var jsonContent = new StringContent(ToJsonFrom(content), Encoding.UTF8, "application/json");
-
-                    var result = await client.PostAsync(uri, jsonContent);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        return DeserializeAs<TResponse>(await result.Content.ReadAsStringAsync());
-                    }
-                    throw new ConnectionFailedException($"{uri} : {result.StatusCode} - {result.RequestMessage}");
+                    return DeserializeAs<TResponse>(await result.Content.ReadAsStringAsync());
                 }
+                throw new ConnectionFailedException($"{uri} : {result.StatusCode} - {result.RequestMessage}");
+            }
 
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
         }
 
         protected async Task<TResponse> TryHttpPutAs<TContent, TResponse>(string uri, TContent content)
         {
-            try
+            using (var client = new HttpClient())
             {
-                using (var client = new HttpClient())
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                var jsonContent = new StringContent(ToJsonFrom(content), Encoding.UTF8, "application/json");
+
+                var result = await client.PutAsync(uri, jsonContent);
+                if (result.IsSuccessStatusCode)
                 {
-                    client.DefaultRequestHeaders.Add("Accept", "application/json");
-                    var jsonContent = new StringContent(ToJsonFrom(content), Encoding.UTF8, "application/json");
-
-                    var result = await client.PutAsync(uri, jsonContent);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        return DeserializeAs<TResponse>(await result.Content.ReadAsStringAsync());
-                    }
-                    throw new ConnectionFailedException($"{uri} : {result.StatusCode} - {result.RequestMessage}");
+                    return DeserializeAs<TResponse>(await result.Content.ReadAsStringAsync());
                 }
-
-            }
-            catch (Exception e)
-            {
-                throw e;
+                throw new ConnectionFailedException($"{uri} : {result.StatusCode} - {result.RequestMessage}");
             }
         }
 
