@@ -111,6 +111,7 @@
     <Compile Include="Connector\IStavebniDenikConnector.cs" />
     <Compile Include="Connector\IUzivatelConnector.cs" />
     <Compile Include="Connector\IZakazkyConnector.cs" />
+    <Compile Include="Connector\KalkulaceConnector.cs" />
     <Compile Include="Connector\UzivatelConnector.cs" />
     <Compile Include="CurrentDataSingleton.cs" />
     <Compile Include="Exceptions\ConnectionFailedException.cs" />

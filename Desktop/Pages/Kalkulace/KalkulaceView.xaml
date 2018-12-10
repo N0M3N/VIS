@@ -9,8 +9,97 @@
       d:DataContext="{d:DesignInstance Type=local:KalkulaceViewModel, IsDesignTimeCreatable=False}"
       mc:Ignorable="d">
 
-    <Grid>
-        <!-- TODO: Kalkulace -->
-        <Button Command="{Binding ExportToXmlCommand}" Content="Export to XML" />
-    </Grid>
+    <GroupBox DockPanel.Dock="Top" Grid.IsSharedSizeScope="True" BorderThickness="0">
+        <DockPanel LastChildFill="False">
+            <TextBlock DockPanel.Dock="Top" Text="{Binding Zakazka.Value.Nazev}" Style="{StaticResource Header1}" />
+            <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+                <Border DockPanel.Dock="Top" BorderThickness="0 0 0 1" BorderBrush="{StaticResource Accent3}">
+                    <Grid Name="HEADER">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="A" />
+                            <ColumnDefinition SharedSizeGroup="B" />
+                            <ColumnDefinition SharedSizeGroup="D" Width="100" />
+                            <ColumnDefinition SharedSizeGroup="D" />
+                            <ColumnDefinition SharedSizeGroup="D" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Zamestnanec" Style="{StaticResource TableHeader}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" />
+
+                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Kalkulace.Value.MzdoveNaklady[0].Dochazka}" Padding="0 10">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="F" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="{Binding Datum}" Style="{StaticResource TableHeader90}" VerticalAlignment="Bottom" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                        <TextBlock Text="Celkem Hodin" Style="{StaticResource TableHeader45}" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" />
+                        <TextBlock Text="Sazba" Style="{StaticResource TableHeader45}" VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" />
+                        <TextBlock Text="Celkova Mzda" Style="{StaticResource TableHeader45}" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" />
+                    </Grid>
+                </Border>
+                <Border DockPanel.Dock="Top" BorderThickness="0 0 0 1" BorderBrush="{StaticResource Accent3}">
+                    <ItemsControl Name="CONTENT" DockPanel.Dock="Top" ItemsSource="{Binding Kalkulace.Value.MzdoveNaklady}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="A" MinWidth="150" />
+                                        <ColumnDefinition SharedSizeGroup="B" />
+                                        <ColumnDefinition SharedSizeGroup="D" />
+                                        <ColumnDefinition SharedSizeGroup="D" />
+                                        <ColumnDefinition SharedSizeGroup="D" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Padding="10">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Zamestnanec.Jmeno" />
+                                                <Binding Path="Zamestnanec.Prijmeni" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+
+                                    <ItemsControl Grid.Column="1" ItemsSource="{Binding Dochazka}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="3">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition SharedSizeGroup="F" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Text="{Binding OdpracovanychHodin}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                    <TextBlock Grid.Column="2" Text="{Binding CelkemHodin}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="3" Text="{Binding Sazba}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="4" Text="{Binding Mzda}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+                <TextBlock DockPanel.Dock="Top" Style="{StaticResource Header1}" Padding="10" Text="{Binding Kalkulace.Value.CelkoveMzdy, StringFormat={}Celkem {0}}" HorizontalAlignment="Right" />
+            </DockPanel>
+            <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Command="{Binding ExportToXmlCommand}" Style="{StaticResource ButtonStyle}" Content="Export to XML" />
+        </DockPanel>
+    </GroupBox>
 </Page>

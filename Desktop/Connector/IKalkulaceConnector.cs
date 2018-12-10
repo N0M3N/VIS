@@ -1,11 +1,11 @@
-﻿namespace Desktop.Connector
+﻿using Models;
+using Models.API_Models;
+using System.Threading.Tasks;
+
+namespace Desktop.Connector
 {
     internal interface IKalkulaceConnector
     {
-    }
-
-    internal class KalkulaceConnector : IKalkulaceConnector
-    {
-
+        Task<KalkulaceGetModel> GetByZakazka(ZakazkaModel zakazka);
     }
 }

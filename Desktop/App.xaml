@@ -28,7 +28,26 @@
 
         <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxBaseStyle}" />
 
-
+        <Style TargetType="TextBlock" x:Key="TableHeader">
+            <Setter Property="FontWeight" Value="SemiBold" /> 
+        </Style>
+        
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TableHeader}" x:Key="TableHeader90">
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="90" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TableHeader}" x:Key="TableHeader45">
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="45" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style TargetType="PasswordBox" BasedOn="{StaticResource TextBoxBaseStyle}">
             <Setter Property="PasswordChar" Value="*" />
         </Style>
