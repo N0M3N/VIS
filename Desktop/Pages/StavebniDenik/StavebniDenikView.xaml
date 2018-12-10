@@ -9,7 +9,33 @@
       d:DataContext="{d:DesignInstance Type=local:StavebniDenikViewModel, IsDesignTimeCreatable=False}"
       mc:Ignorable="d">
 
-    <Grid>
+    <DockPanel LastChildFill="False">
         
-    </Grid>
+        <Grid DockPanel.Dock="Top" Margin="0 0 0 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <DatePicker VerticalAlignment="Center" BorderThickness="0" Grid.Column="0" SelectedDate="{Binding Datum.Value}" />
+            <TextBox VerticalAlignment="Center" Grid.Column="1" Text="{Binding Popis.Value}" AcceptsReturn="True" MinLines="2" VerticalContentAlignment="Top" Height="Auto" />
+            <Button VerticalAlignment="Center" Grid.Column="2" Command="{Binding PridatZaznamCommand}" Content="Pridat" Width="100" Style="{StaticResource ButtonStyle}" Margin="5 0 0 0" />
+        </Grid>
+
+        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding Denik, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="100" Header="Datum" Binding="{Binding Path=Datum}" />
+                <DataGridTextColumn Width="*" Header="Popis" Binding="{Binding Path=Popis}" />
+                <DataGridTextColumn Width="150" Header="Pridal">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Zamestnanec.Jmeno" />
+                            <Binding Path="Zamestnanec.Prijmeni" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </Page>

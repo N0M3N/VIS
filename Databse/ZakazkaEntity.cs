@@ -30,7 +30,7 @@ namespace Databse
             JOIN[dbo].[Uzivatel] Zam ON Z.[Zamestnanec-Id] = Zam.[Id]
             JOIN[dbo].[Uzivatel] Zak ON Z.[Zakaznik-Id] = Zak.[Id]
 
-            WHER Z.[Id] = @p_id;";
+            WHERE Z.[Id] = @p_id;";
 
         protected override string SQL_INSERT => "INSERT INTO [dbo].[Zakazka] ([Nazev], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline]) VALUES (@p_name, @p_zakaznikId, @p_zamestnanecId, @p_stavId, @p_adresa, @p_deadline); SELECT SCOPE_IDENTITY(); " +
             "SELECT TOP 1 [Id], [Nazev], [Zakaznik-Id], [Zamestnanec-Id], [Stav-Id], [Adresa], [Deadline] FROM [dbo].[Zakazka] ORDER BY [Id] DESC;";

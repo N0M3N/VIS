@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.API_Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace Desktop.Connector
     {
         public Task<StavebniDenikModel> Add(StavebniDenikModel model)
         {
-            return TryHttpPostAs<StavebniDenikModel, StavebniDenikModel>($"{WebApiUrl}/stavebniDenik", model);
+            return TryHttpPutAs<StavebniDenikPostModel, StavebniDenikModel>($"{WebApiUrl}/stavebniDenik", new StavebniDenikPostModel { Datum = model.Datum, Popis = model.Popis, ZakazkaId = model.Zakazka.Id, ZamestnanecId = model.Zamestnanec.Id });
         }
 
         public Task<IEnumerable<StavebniDenikModel>> GetByZakazka(ZakazkaModel zakazka)

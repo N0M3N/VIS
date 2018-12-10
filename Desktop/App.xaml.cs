@@ -50,6 +50,9 @@ namespace Desktop
             builder.RegisterType<StavebniDenikConnector>()
                 .As<IStavebniDenikConnector>()
                 .InstancePerDependency();
+            builder.RegisterType<KalkulaceConnector>()
+                .As<IKalkulaceConnector>()
+                .InstancePerDependency();
         }
 
         private void RegisterMessages(ContainerBuilder builder)

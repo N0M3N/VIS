@@ -107,6 +107,7 @@
     </ApplicationDefinition>
     <Compile Include="Attributes\ViewModelAttribute.cs" />
     <Compile Include="Connector\BaseConnector.cs" />
+    <Compile Include="Connector\IKalkulaceConnector.cs" />
     <Compile Include="Connector\IStavebniDenikConnector.cs" />
     <Compile Include="Connector\IUzivatelConnector.cs" />
     <Compile Include="Connector\IZakazkyConnector.cs" />

@@ -42,11 +42,41 @@ namespace Databse
 
             WHERE SD.[Id] = @p_id;";
 
-        protected override string SQL_INSERT => "INSERT INTO [dbo].[StavebniDenik]([Zakazka-Id], [Uzivatel-Id], [Datum], [Popis]) VALUES (@p_zakazkaId, @p_uzivatelId, @p_datum, @p_popis); " +
-            "SELECT TOP 1 [Id], [Zakazka-Id], [Uzivatel-Id], [Datum], [Popis] FROM [dbo].[StavebniDenik] ORDER BY [Id] DESC;";
+        protected override string SQL_INSERT => @"INSERT INTO [dbo].[StavebniDenik]([Zakazka-Id], [Uzivatel-Id], [Datum], [Popis]) VALUES (@p_zakazkaId, @p_uzivatelId, @p_datum, @p_popis);
+            SELECT TOP 1
+            SD.[Id], SD.[Datum], SD.[Popis],
+                Z.[Id], Z.[Nazev], Z.[Adresa], Z.[Deadline],
+                    S.[Nazev],
+		            Zak.[Id], Zak.[Jmeno], Zak.[Prijmeni], Zak.[Telefon], Zak.[Login], Zak.[JeZakaznik], Zak.[JeZamestnanec],
+		            Zam.[Id], Zam.[Jmeno], Zam.[Prijmeni], Zam.[Telefon], Zam.[Login], Zam.[JeZakaznik], Zam.[JeZamestnanec],
+                U.[Id], U.[Jmeno], U.[Prijmeni], U.[Telefon], U.[Login], U.[JeZakaznik], U.[JeZamestnanec]
+            FROM [dbo].[StavebniDenik] SD
 
-        protected override string SQL_UPDATE => "UPDATE [dbo].[StavebniDenik] SET [Zakazka-Id] = @p_zakazkaId, [Uzivatel-Id] = @p_uzivatelId, [Datum] = @p_datum, [Popis] = @p_popis WHERE [Id] = @p_id; " +
-            "SELECT TOP 1 [Id], [Zakazka-Id], [Uzivatel-Id], [Datum], [Popis] FROM [dbo].[StavebniDenik] ORDER BY [Id] DESC;";
+            JOIN[dbo].[Zakazka] Z ON SD.[Zakazka-Id] = Z.[Id]
+            JOIN [dbo].[Stav] S ON Z.[Stav-Id] = S.[Id]
+            JOIN[dbo].[Uzivatel] Zam ON Z.[Zamestnanec-Id] = Zam.[Id]
+            JOIN[dbo].[Uzivatel] Zak ON Z.[Zakaznik-Id] = Zak.[Id]
+            JOIN[dbo].[Uzivatel] U ON SD.[Uzivatel-Id] = U.[Id]
+
+            ORDER BY SD.[Id] DESC";
+
+        protected override string SQL_UPDATE => @"UPDATE [dbo].[StavebniDenik] SET [Zakazka-Id] = @p_zakazkaId, [Uzivatel-Id] = @p_uzivatelId, [Datum] = @p_datum, [Popis] = @p_popis WHERE [Id] = @p_id;
+            SELECT TOP 1
+            SD.[Id], SD.[Datum], SD.[Popis],
+                Z.[Id], Z.[Nazev], Z.[Adresa], Z.[Deadline],
+                    S.[Nazev],
+		            Zak.[Id], Zak.[Jmeno], Zak.[Prijmeni], Zak.[Telefon], Zak.[Login], Zak.[JeZakaznik], Zak.[JeZamestnanec],
+		            Zam.[Id], Zam.[Jmeno], Zam.[Prijmeni], Zam.[Telefon], Zam.[Login], Zam.[JeZakaznik], Zam.[JeZamestnanec],
+                U.[Id], U.[Jmeno], U.[Prijmeni], U.[Telefon], U.[Login], U.[JeZakaznik], U.[JeZamestnanec]
+            FROM[dbo].[StavebniDenik] SD
+
+            JOIN[dbo].[Zakazka] Z ON SD.[Zakazka - Id] = Z.[Id]
+            JOIN[dbo].[Stav] S ON Z.[Stav - Id] = S.[Id]
+            JOIN[dbo].[Uzivatel] Zam ON Z.[Zamestnanec - Id] = Zam.[Id]
+            JOIN[dbo].[Uzivatel] Zak ON Z.[Zakaznik - Id] = Zak.[Id]
+            JOIN[dbo].[Uzivatel] U ON SD.[Uzivatel - Id] = U.[Id]
+
+            ORDER BY SD.[Id] DESC;";
 
         protected override string SQL_DELETE => "DELETE FROM [dbo].[StavebniDenik] WHERE [Id] = @p_id;";
 
