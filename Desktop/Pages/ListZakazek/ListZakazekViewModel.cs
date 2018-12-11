@@ -12,6 +12,7 @@ namespace Desktop.Pages.ListZakazek
     [ViewModel]
     internal class ListZakazekViewModel : IDisposable
     {
+        private readonly IObserver<LogMessage> logger;
         private readonly INavigationService navigation;
         private readonly IZakazkyConnector zakazkyConnector;
         private readonly CurrentDataSingleton currentData;
@@ -22,14 +23,14 @@ namespace Desktop.Pages.ListZakazek
         public ReactiveProperty<ZakazkaModel> Selected { get; }
         public ReactiveCommand<ZakazkaModel> ContinueCommand { get; }
 
-        public ListZakazekViewModel(INavigationService navigation, IZakazkyConnector zakazkyConnector, CurrentDataSingleton currentData)
+        public ListZakazekViewModel(IObserver<LogMessage> logger, INavigationService navigation, IZakazkyConnector zakazkyConnector, CurrentDataSingleton currentData)
         {
             Zakazky = new ReactiveCollection<ZakazkaModel>();
             CanExecute = new ReactiveProperty<bool>();
             Selected = new ReactiveProperty<ZakazkaModel>();
             Selected.PropertyChanged += (sender, args) => CanExecute.Value = Selected.Value != null;
             ContinueCommand = ReactiveCommandHelper.Create<ZakazkaModel>(Navigate);
-
+            this.logger = logger;
             this.navigation = navigation;
             this.zakazkyConnector = zakazkyConnector;
             this.currentData = currentData;
@@ -39,13 +40,27 @@ namespace Desktop.Pages.ListZakazek
 
         private async void Populate()
         {
-            Zakazky.AddRangeOnScheduler(await zakazkyConnector.GetAllByUserAsync(currentData.Uzivatel.Value));
+            try
+            {
+                Zakazky.AddRangeOnScheduler(await zakazkyConnector.GetAllByUserAsync(currentData.Uzivatel.Value));
+            }
+            catch (Exception e)
+            {
+                logger.OnNext(LogMessage.Error(e.Message));
+            }
         }
 
         private void Navigate(ZakazkaModel zakazka)
         {
-            currentData.Zakazka = zakazka;
-            navigation.Navigate((Page) Activator.CreateInstance(currentData.PageType));
+            try
+            {
+                currentData.Zakazka = zakazka;
+                navigation.Navigate((Page)Activator.CreateInstance(currentData.PageType));
+            }
+            catch (Exception e)
+            {
+                logger.OnNext(LogMessage.Error(e.Message));
+            }
         }
 
         public void Dispose()

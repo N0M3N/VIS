@@ -9,12 +9,17 @@
         xmlns:detailzakazky="clr-namespace:Desktop.Pages.DetailZakazky"
         xmlns:stavebniDenik="clr-namespace:Desktop.Pages.StavebniDenik"
         xmlns:kalkulace="clr-namespace:Desktop.Pages.Kalkulace"
+        xmlns:logger="clr-namespace:Desktop.Pages.Logger"
         DataContext="{utils:Resolve local:MainWindowViewModel}"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Title="VIS - Stavebni denik a dochazka">
 
-    <DockPanel LastChildFill="True">
-        <DockPanel LastChildFill="False" DockPanel.Dock="Top" Style="{StaticResource NavBar}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="False" Grid.Row="0" Style="{StaticResource NavBar}">
             <TextBlock Text="Stavebni denik a dochazka zamestnancu" Style="{StaticResource Logo}" />
             <DockPanel DockPanel.Dock="Right">
                 <DockPanel.Style>
@@ -66,6 +71,8 @@
             </DockPanel>
         </DockPanel>
 
-        <Frame Padding="30" DockPanel.Dock="Top" x:Name="Frame" Background="{StaticResource Accent1}" NavigationUIVisibility="Hidden" />
-    </DockPanel>
+        <Frame Padding="30" Grid.Row="1" x:Name="Frame" Panel.ZIndex="1" Background="{StaticResource Accent1}" NavigationUIVisibility="Hidden" />
+
+        <logger:LoggerView Grid.Row="1" Panel.ZIndex="5"></logger:LoggerView>
+    </Grid>
 </Window>

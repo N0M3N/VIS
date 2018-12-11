@@ -14,6 +14,7 @@ namespace Desktop.Pages.Kalkulace
     [ViewModel]
     internal class KalkulaceViewModel : IDisposable
     {
+        private readonly IObserver<LogMessage> logger;
         private readonly CurrentDataSingleton currentData;
         private readonly IFileExportService exportService;
         private readonly IKalkulaceConnector kalkulaceConnector;
@@ -22,11 +23,12 @@ namespace Desktop.Pages.Kalkulace
         public ReactiveProperty<KalkulaceGetModel> Kalkulace { get; }
         public ReactiveProperty<ZakazkaModel> Zakazka { get; }
 
-        public KalkulaceViewModel(CurrentDataSingleton currentData, IFileExportService exportService, IKalkulaceConnector kalkulaceConnector)
+        public KalkulaceViewModel(IObserver<LogMessage> logger, CurrentDataSingleton currentData, IFileExportService exportService, IKalkulaceConnector kalkulaceConnector)
         {
             ExportToXmlCommand = ReactiveCommandHelper.Create(ExportToXmlAction);
             Kalkulace = new ReactiveProperty<KalkulaceGetModel>();
             Zakazka = new ReactiveProperty<ZakazkaModel>();
+            this.logger = logger;
             this.currentData = currentData;
             this.exportService = exportService;
             this.kalkulaceConnector = kalkulaceConnector;
@@ -36,12 +38,19 @@ namespace Desktop.Pages.Kalkulace
 
         private async void Populate()
         {
-            Zakazka.Value = currentData.Zakazka;
-
-            var kalkulace = await kalkulaceConnector.GetByZakazka(currentData.Zakazka);
-            if(kalkulace != null)
+            try
             {
-                Kalkulace.Value = kalkulace;
+                Zakazka.Value = currentData.Zakazka;
+
+                var kalkulace = await kalkulaceConnector.GetByZakazka(currentData.Zakazka);
+                if (kalkulace != null)
+                {
+                    Kalkulace.Value = kalkulace;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.OnNext(LogMessage.Error(e.Message));
             }
         }
 

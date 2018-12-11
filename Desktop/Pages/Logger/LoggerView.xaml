@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Desktop.Pages.Logger.LoggerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Desktop.Pages.Logger"
+             xmlns:utils="clr-namespace:Desktop.Utils"
+             DataContext="{utils:Resolve local:LoggerViewModel}"
+             d:DataContext="{d:DesignInstance Type=local:LoggerViewModel, IsDesignTimeCreatable=False}"
+             mc:Ignorable="d">
+    
+    <ItemsControl ItemsSource="{Binding Messages}" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Vertical" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <DockPanel>
+                    <DockPanel.Style>
+                        <Style TargetType="DockPanel">
+                            <Setter Property="Background" Value="Red" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSuccess}" Value="True">
+                                    <Setter Property="Background" Value="Green" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DockPanel.Style>
+                    <TextBlock DockPanel.Dock="Top" Padding="50 10" Text="{Binding Message}" />
+                </DockPanel>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

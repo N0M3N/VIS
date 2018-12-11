@@ -12,6 +12,7 @@ namespace Desktop.Pages.Login
     [ViewModel]
     internal class LoginViewModel : IDisposable
     {
+        private readonly IObserver<LogMessage> logger;
         private readonly INavigationService navigation;
         private readonly IUzivatelConnector uzivatelConnector;
         private readonly MainWindowViewModel mainWindow;
@@ -20,8 +21,9 @@ namespace Desktop.Pages.Login
         public ReactiveProperty<string> Password { get; }
         public ReactiveCommand LogInCommand { get; }
 
-        public LoginViewModel(INavigationService navigation, IUzivatelConnector uzivatelConnector, MainWindowViewModel mainWindow)
+        public LoginViewModel(IObserver<LogMessage> logger, INavigationService navigation, IUzivatelConnector uzivatelConnector, MainWindowViewModel mainWindow)
         {
+            this.logger = logger;
             this.navigation = navigation;
             this.uzivatelConnector = uzivatelConnector;
             this.mainWindow = mainWindow;
@@ -32,11 +34,22 @@ namespace Desktop.Pages.Login
 
         private async void LoginAction()
         {
-            var user = await uzivatelConnector.Login(new LoginModel { Login = Login.Value, Password = Password.Value });
-            if(user != null)
+            try
             {
-                mainWindow.CurrentData.Uzivatel.Value = user;
-                navigation.Navigate(new HomeView());
+                var user = await uzivatelConnector.Login(new LoginModel { Login = Login.Value, Password = Password.Value });
+                if (user != null)
+                {
+                    mainWindow.CurrentData.Uzivatel.Value = user;
+                    navigation.Navigate(new HomeView());
+                }
+                else
+                {
+                    logger.OnNext(LogMessage.Error("Wrong credentials"));
+                }
+            }
+            catch (Exception e)
+            {
+                logger.OnNext(LogMessage.Error(e.Message));
             }
         }
 

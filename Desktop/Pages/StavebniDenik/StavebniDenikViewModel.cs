@@ -10,6 +10,7 @@ namespace Desktop.Pages.StavebniDenik
     [ViewModel]
     internal class StavebniDenikViewModel : IDisposable
     {
+        private readonly IObserver<LogMessage> logger;
         private readonly CurrentDataSingleton currentData;
         private readonly IStavebniDenikConnector denikConnector;
 
@@ -19,8 +20,9 @@ namespace Desktop.Pages.StavebniDenik
         public ReactiveCollection<StavebniDenikModel> Denik { get; }
         public ReactiveCommand PridatZaznamCommand { get; }
 
-        public StavebniDenikViewModel(CurrentDataSingleton currentData, IStavebniDenikConnector denikConnector)
+        public StavebniDenikViewModel(IObserver<LogMessage> logger, CurrentDataSingleton currentData, IStavebniDenikConnector denikConnector)
         {
+            this.logger = logger;
             this.currentData = currentData;
             this.denikConnector = denikConnector;
 
@@ -43,20 +45,30 @@ namespace Desktop.Pages.StavebniDenik
                         Popis = Popis.Value,
                         Zakazka = currentData.Zakazka,
                         Zamestnanec = currentData.Uzivatel.Value });
+
+                logger.OnNext(LogMessage.Success("Zaznam pridan"));
+
                 Denik.AddOnScheduler(result);
             }
             catch (Exception e)
             {
-
+                logger.OnNext(LogMessage.Error(e.Message));
             }
         }
 
         private async void Populate()
         {
-            var zaznamy = await denikConnector.GetByZakazka(currentData.Zakazka);
-            foreach (var zaznam in zaznamy)
+            try
             {
-                Denik.AddOnScheduler(zaznam);
+                var zaznamy = await denikConnector.GetByZakazka(currentData.Zakazka);
+                foreach (var zaznam in zaznamy)
+                {
+                    Denik.AddOnScheduler(zaznam);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.OnNext(LogMessage.Error(e.Message));
             }
         }
 

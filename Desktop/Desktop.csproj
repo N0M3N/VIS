@@ -125,12 +125,17 @@
     </Compile>
     <Compile Include="Pages\ListZakazek\ListZakazekViewModel.cs" />
     <Compile Include="Converters\MultiBindingIntoArrayConverter.cs" />
+    <Compile Include="Pages\Logger\LoggerView.xaml.cs">
+      <DependentUpon>LoggerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Logger\LoggerViewModel.cs" />
     <Compile Include="Pages\StavebniDenik\StavebniDenikView.xaml.cs">
       <DependentUpon>StavebniDenikView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StavebniDenik\StavebniDenikViewModel.cs" />
     <Compile Include="Services\IFileExportService.cs" />
     <Compile Include="Services\XmlExportService.cs" />
+    <Compile Include="Utils\LogMessage.cs" />
     <Compile Include="Utils\ReactiveCommandHelper.cs" />
     <Compile Include="Utils\ResolveExtension.cs" />
     <Compile Include="MainWindowViewModel.cs" />
@@ -173,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ListZakazek\ListZakazekView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Logger\LoggerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

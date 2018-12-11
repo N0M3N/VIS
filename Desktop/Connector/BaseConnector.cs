@@ -40,7 +40,7 @@ namespace Desktop.Connector
                 {
                     return DeserializeAs<TResponse>(await result.Content.ReadAsStringAsync());
                 }
-                throw new ConnectionFailedException($"{uri} : {result.StatusCode} - {result.RequestMessage}");
+                throw new ConnectionFailedException($"{uri} : {result.StatusCode}");
             }
 
         }
